@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Admin panel{% endblock %}</title>
+
+    {% stylesheets
+    'bundles/css/default/bootstrap.css' filter='cssrewrite'
+    'bundles/css/default/fos.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+{% include '::topnav.html.twig' %}
+
+{% block content %}
+
+    {#<div>#}
+        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
+            {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |#}
+            {#<a href="{{ path('fos_user_security_logout') }}">#}
+                {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
+            {#</a>#}
+        {#{% else %}#}
+            {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+        {#{% endif %}#}
+    {#</div>#}
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    <div>
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    'bundles/js/jquery-3.1.1.js'
+    'bundles/js/bootstrap.js'
+    'bundles/js/admin/index.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {#CDN LIBARAYS#}
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    {#END CDN#}
+{% endblock %}
+
+<script>
+    function callback_tinymce_init(editor) {
+        editor.settings.entity_encoding = 'raw';
+    }
+</script>
+{{ tinymce_init({
+    theme: {'simple':{'language': app.request.locale, 'height': 300 }},
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    autosave_ask_before_unload: false})
+}}

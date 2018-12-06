@@ -1,0 +1,18 @@
+<h1>{{ cursus.cursus.naam }} -
+    {{ cursus.cursus.datum|date("Y-m-d") }} -
+        {{ cursus.cursus.datum|date_modify("+7 day")|date("Y-m-d") }}
+</h1>
+
+{{ profile.firstName }} {{ profile.lastName }} <br/>
+{{ cursus.user.email }} <br />
+{{ profile.address }} <br />
+{{ profile.city }}, {{ profile.zipcode }} <br />
+{{ profile.country }}
+
+<br />
+<hr/>
+
+{{ cursus.cursus.beschrijving }} <br />
+
+
+<h2>Kosten €{{ cursus.cursus.cursusType.prijs }}</h2>

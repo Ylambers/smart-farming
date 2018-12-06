@@ -1,0 +1,3 @@
+user_invoice:
+    path: /user/cursus/invoice/{id}
+    defaults: { _controller: AppBundle:Invoice:invoiceUser}

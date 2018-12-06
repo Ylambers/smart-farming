@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Admin panel{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    {% stylesheets
+        'bundles/css/default/bootstrap.css' filter='cssrewrite'
+        'bundles/css/admin/index.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {#CDN LIBARAYS#}
+        <link href="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+    {#END CDN#}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+
+{% include '::topnav.html.twig' %}
+
+{% block body %}
+{% endblock %}
+
+
+{% block content %}{% endblock %}
+{% block javascripts %}
+    {% javascripts
+    'bundles/js/jquery-3.1.1.js'
+    'bundles/js/bootstrap.js'
+    'bundles/js/admin/index.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {#CDN LIBARAYS#}
+        <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    {#END CDN#}
+{% endblock %}
+
+<script>
+    function callback_tinymce_init(editor) {
+        editor.settings.entity_encoding = 'raw';
+    }
+</script>
+{{ tinymce_init({
+    theme: {'simple':{'language': app.request.locale, 'height': 300 }},
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    autosave_ask_before_unload: false})
+}}
+</body>
+</html>

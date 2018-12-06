@@ -1,0 +1,17 @@
+dashboard:
+    resource: "dashboard/dashboard.yml"
+
+app:
+   resource: "@AppBundle/Controller/"
+   type:     annotation
+
+#contact:
+#    path: /contact
+#    defaults: { _controller: AppBundle:Default:contact}
+
+default:
+   path:     /
+   defaults: { _controller: AppBundle:Default:index }
+
+
+

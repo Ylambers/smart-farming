@@ -1,0 +1,3 @@
+site_information:
+   path:     admin/site/information
+   defaults: { _controller: AppBundle:Dashboard/Site:siteInformation }

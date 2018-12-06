@@ -1,0 +1,15 @@
+image_view:
+   path:     /admin/image/show
+   defaults: { _controller: AppBundle:Dashboard/Image:showImage }
+
+image_upload:
+   path:     /admin/image/upload
+   defaults: { _controller: AppBundle:Dashboard/Image:addImage }
+
+image_edit:
+   path:     /admin/image/edit/{id}
+   defaults: { _controller: AppBundle:Dashboard/Image:editImage }
+
+image_delete:
+   path:     /admin/image/delete/{id}
+   defaults: { _controller: AppBundle:Dashboard/Image:deleteImage }

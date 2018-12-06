@@ -1,0 +1,29 @@
+<h1>{{ cursus.naam }}</h1>
+<h3>{{ cursus.datum|date("Y-m-d") }} - {{ cursus.datum|date_modify("+7 day")|date("Y-m-d") }}</h3>
+<ul>
+    <li>{{ cursus.cursusType.title }}</li>
+    <li>Kosten: €{{ cursus.cursusType.prijs }}</li>
+    <li>Boten: {{ cursus.cursusType.boten }}</li>
+    <li>Naam van het schip: {{ cursus.cursusType.schip.name }}</li>
+    <li>Capaciteit {{ cursus.cursusType.schip.capaciteit }}</li>
+</ul>
+<ul>
+    <li>Max. aantal cursisten {{ cursus.cursusType.schip.capaciteit * cursus.cursusType.boten }}</li>
+    <li>Aantal aanmeldeingen {{ arrCount }}</li>
+    <li>Opbrengst: €{{ arrCount * cursus.cursusType.prijs }}</li>
+</ul>
+<hr />
+
+<h1>Aanmeldingen</h1>
+
+{% for item in profile %}
+   <p>
+       {{ item.firstName }} {{ item.lastName }}
+       {% if item.phoneNumber is not null %}
+           Tell: {{ item.phoneNumber }}
+       {% endif %}
+       {% if item.mobileNumber is not null %}
+           Mob: {{ item.mobileNumber }}
+       {% endif %}
+   </p> <hr/> <br />
+{% endfor %}

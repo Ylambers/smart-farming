@@ -1,0 +1,22 @@
+{% extends 'admin/index.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% for image in data %}
+                <div class="col-md-4 img-grid-style">
+                    <div class="img-grid-hover">
+                        <h2>{{ image.name }}</h2><br />
+                        <p>{{ image.description }}</p> <br />
+                        <a href="#" class="btn btn-default" data-featherlight="{{ asset('uploads/images/' ~ image.image) }}">View image</a>
+                        {#<a class="btn btn-primary" href="{{ path('image_edit', {'id': image.id}) }}" role="button">Edit image</a>#}
+                        <a class="btn btn-danger" href="{{ path('image_delete', {'id': image.id}) }}" role="button">Delete</a>
+                    </div>
+                    <img src="{{ asset('uploads/images/' ~ image.image) }}" /><br/><br/>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

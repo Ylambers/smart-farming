@@ -1,0 +1,30 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Aangemelde cursussen</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Cursus naam</th>
+                <th>Cursus datum</th>
+                <th>Cursus einddatum</th>
+                <th>Print factuur</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for item in cursus %}
+                    <tr>
+                        <td>{{ item.cursus.naam }}</td>
+                        <td>{{ item.cursus.datum|date("Y-m-d") }}</td>
+                        <td>{{ item.cursus.datum|date_modify("+7 day")|date("Y-m-d") }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ path('user_invoice', {'id': item.cursus.id}) }}" role="button">Print</a>
+                        </td>
+                    </tr>
+                {% endfor  %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+slider:
+   path:     /admin/slider
+   defaults: { _controller: AppBundle:Dashboard/Slider:AddSlider}
+
+slider_edit:
+   path:     /admin/slider/edit/{id}
+   defaults: { _controller: AppBundle:Dashboard/Slider:EditSlider }
+
+slider_delete:
+   path:     /admin/slider/delete/{id}
+   defaults: { _controller: AppBundle:Dashboard/Slider:deleteSlider }

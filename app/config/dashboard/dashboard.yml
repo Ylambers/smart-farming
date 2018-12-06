@@ -1,0 +1,17 @@
+user_db:
+    resource: "user_db.yml"
+
+site_info_db:
+    resource: "site_info.yml"
+
+image_db:
+    resource: "image_db.yml"
+
+basic_db:
+    resource: "basic_db.yml"
+
+invoice_db:
+    resource: "invoice_db.yml"
+
+contact_db:
+    resource: "contact_db.yml"

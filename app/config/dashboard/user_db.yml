@@ -1,0 +1,15 @@
+user:
+   path:     /admin/fos/show
+   defaults: { _controller: AppBundle:Dashboard/User:showUsers }
+
+user_edit:
+   path:     /admin/fos/edit/{id}
+   defaults: { _controller: AppBundle:Dashboard/User:editUser }
+
+user_profile:
+   path:     user/profile
+   defaults: { _controller: AppBundle:Dashboard/User:userProfile }
+
+user_all_details:
+   path:     admin/details/{id}
+   defaults: { _controller: AppBundle:Dashboard/User:allUserDetails }

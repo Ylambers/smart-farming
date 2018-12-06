@@ -1,0 +1,11 @@
+/var/
+/vendor/
+
+.idea/
+
+/web/css
+/web/js
+/web/uploads
+/web/bundles/framework
+/web/bundles/stfalcontinymce
+app/bootstrap.php.cache
