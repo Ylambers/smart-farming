@@ -1,17 +1,18 @@
-dashboard:
-    resource: "dashboard/dashboard.yml"
-
 app:
    resource: "@AppBundle/Controller/"
    type:     annotation
 
-#contact:
-#    path: /contact
-#    defaults: { _controller: AppBundle:Default:contact}
+logout:
+   path: /logout
 
-default:
-   path:     /
-   defaults: { _controller: AppBundle:Default:index }
+fos_user:
+   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+home:
+  path:     /dashboard/home
+  defaults: { _controller: AppBundle:Dashboard:index }
 
 
-
+_errors:
+  resource: "@TwigBundle/Resources/config/routing/errors.xml"
+  prefix:   /_error

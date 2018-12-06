@@ -1,3 +1,0 @@
-default:
-   path:     /contact
-   defaults: { _controller: AppBundle:Dashboard/Contact:ContactForm }
