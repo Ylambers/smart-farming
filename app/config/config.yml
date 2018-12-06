@@ -20,8 +20,6 @@ fos_user:
         address: you@example.com
         sender_name: You
 
-stfalcon_tinymce:
-    use_callback_tinymce_init: true
 
 parameters:
     locale: en

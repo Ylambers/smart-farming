@@ -11,8 +11,8 @@
         "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=5.5.9",
-        "symfony/symfony": "3.1.*",
+        "php": "5.5.9",
+        "symfony/symfony": "3.4",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
@@ -24,10 +24,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "symfony/assetic-bundle": "^2.8",
-        "stfalcon/tinymce-bundle": "2.0",
-        "egeloen/ckeditor-bundle": "^4.0",
-        "whiteoctober/tcpdf-bundle": "^1.0",
-        "gregwar/captcha-bundle": "^2.0"
+        "symfony/requirements-checker": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
