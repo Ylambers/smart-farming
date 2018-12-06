@@ -19,14 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DashboardController extends Controller
 {
-
     /**
      *
      * @Route("/home", name="dashboard_home")
      */
     public function indexAction()
     {
-        return new Response("fix");
+        return $this->render(':dashboard/admin:index.html.twig');
     }
-
 }
