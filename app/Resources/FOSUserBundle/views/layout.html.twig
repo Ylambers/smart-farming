@@ -18,16 +18,6 @@
 
 {% block content %}
 
-    {#<div>#}
-        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-            {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |#}
-            {#<a href="{{ path('fos_user_security_logout') }}">#}
-                {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
-            {#</a>#}
-        {#{% else %}#}
-            {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
-        {#{% endif %}#}
-    {#</div>#}
     {% if app.request.hasPreviousSession %}
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
@@ -57,14 +47,3 @@
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
     {#END CDN#}
 {% endblock %}
-
-<script>
-    function callback_tinymce_init(editor) {
-        editor.settings.entity_encoding = 'raw';
-    }
-</script>
-{{ tinymce_init({
-    theme: {'simple':{'language': app.request.locale, 'height': 300 }},
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-    autosave_ask_before_unload: false})
-}}
