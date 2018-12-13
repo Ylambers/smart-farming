@@ -6,14 +6,13 @@
  * Time: 12:36
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/dashboard/users")
+ * @Route("/admin/dashboard/users")
  */
 class UserController extends Controller
 {
@@ -35,6 +34,19 @@ class UserController extends Controller
      * @Route("/show_user_details/{id}", name="show_user_details")
      */
     public function showUserDetailsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
+
+        return $this->render(':dashboard/user:details.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/edit_user_details/{id}", name="edit_user_details")
+     */
+    public function editUserDetails($id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
