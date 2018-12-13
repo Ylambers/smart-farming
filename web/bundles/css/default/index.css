@@ -13,6 +13,10 @@ body{
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+.top-container{
+    margin-top: 30px;
+}
+
 .header{
     width: 10%;
 }

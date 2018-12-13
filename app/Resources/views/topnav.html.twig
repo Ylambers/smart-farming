@@ -1,54 +1,54 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                {#<a class="navbar-brand" href="{{ path('default') }}">Dashboard</a>#}
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                {% if is_granted('ROLE_SUPER_ADMIN') -%}
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Content <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                            </ul>
-                        </li>
-                    </ul>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                {#<li><a href="{{ path('user') }}">Show users</a></li>#}
-                            </ul>
-                        </li>
-                    </ul>
+        <div id="navbar" class="collapse navbar-collapse">
+            {% if is_granted('ROLE_SUPER_ADMIN') -%}
 
-            {% elseif is_granted('ROLE_USER') -%}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li> <a href="/profile/change-password">Change password</a></li>
                             <li><a href="{{ path('logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
-            {% else %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/register/">Registreer</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-            {% endif %}
-            </div>
-        </div>
 
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('show_all_users') }}">Gebruikers</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            {% elseif is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_USER') -%}
+
+
+            {% else %}
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/register/">Registreer</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            {% endif %}
+
+        </div>
+    </div>
 </nav>
