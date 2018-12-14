@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Company;
+use AppBundle\Entity\CompanyMember;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -133,17 +134,42 @@ class CompanyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $company = $em->getRepository('AppBundle:Company')->findOneBy(['user' => $this->getUser()]);
+        $users = $em->getRepository('AppBundle:User')->findAll();
+        $members = $em->getRepository('AppBundle:CompanyMember')->findBy(['company' => $company]);
 
         if(!$company) {
             return $this->redirectToRoute('company_new');
         }
 
-        
 
         return $this->render('company/ownersPage.html.twig', array(
             'company' => $company,
+            'users' => $users,
+            'members' => $members
         ));
     }
+
+    /**
+     *
+     * @Route("/adduser/own/company/{id}", name="company_owner_add_user")
+     */
+    public function addUserOwnCompanyAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneBy(['user' => $this->getUser()]);
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
+
+        $companyMember = new CompanyMember();
+        $companyMember->setUser($user);
+        $companyMember->setCompany($company);
+
+        $em->persist($companyMember);
+        $em->flush();
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
+    }
+
 
     /**
      * Creates a form to delete a company entity.
