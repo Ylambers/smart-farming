@@ -21,18 +21,19 @@ class CompanyMemberFunction
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="id")
-     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyMember", inversedBy="id")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
      */
     private $company;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyFunction", inversedBy="id")
+     * @ORM\JoinColumn(name="function_id", referencedColumnName="id")
+     */
+    private $function;
 
     /**
      * Get id
@@ -83,6 +84,23 @@ class CompanyMemberFunction
     {
         $this->company = $company;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
+     * @param mixed $function
+     */
+    public function setFunction($function)
+    {
+        $this->function = $function;
+    }
+
 
 }
 
