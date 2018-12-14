@@ -52,6 +52,12 @@ class User extends BaseUser
     private $dateOfBirth;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ranking", inversedBy="id")
+     * @ORM\JoinColumn(name="ranking_id", referencedColumnName="id")
+     */
+    private $ranking;
+
     public function __construct()
     {
         parent::__construct();
@@ -121,7 +127,20 @@ class User extends BaseUser
         $this->lastName = $lastName;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRanking()
+    {
+        return $this->ranking;
+    }
 
-
+    /**
+     * @param mixed $ranking
+     */
+    public function setRanking($ranking)
+    {
+        $this->ranking = $ranking;
+    }
 
 }

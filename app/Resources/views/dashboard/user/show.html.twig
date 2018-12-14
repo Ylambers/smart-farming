@@ -14,7 +14,7 @@
                 <th>Last login</th>
                 <th>Role</th>
                 <th>Person details</th>
-                <th>Edit</th>
+                <th>Bewerken</th>
             </tr>
             </thead>
             <tbody>
@@ -30,10 +30,10 @@
                         <td>{{ item.lastLogin|date("d/m/Y:H:I:s") }}</td>
                         <td>{{ item.roles|join(', ') }}</td>
                         <td>
-                            <a class="btn btn-default" href="{{ path('show_user_details', {'id': item.id}) }}" role="button">View</a>
+                            <a class="btn btn-default" href="{{ path('show_user_details', {'id': item.id}) }}" role="button">Bekijken</a>
                         </td>
                         <td>
-                            {#<a class="btn btn-default" href="{{ path('user_edit', {'id': item.id}) }}" role="button">Edit</a>#}
+                            <a class="btn btn-default" href="{{ path('edit_user_details', {'id': item.id}) }}" role="button">Bewerken</a>
                         </td>
                     </tr>
                 {% endfor %}

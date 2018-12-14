@@ -6,6 +6,7 @@
 ```
     php bin/console doctrine:schema:update --force
     php bin/console doctrine:generate:entities AppBundle
+    php bin/console generate:doctrine:entity AppBundle
 ```
 
 ## Installation

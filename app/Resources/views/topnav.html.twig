@@ -32,9 +32,7 @@
                 </ul>
 
 
-
             {% elseif is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_USER') -%}
-
 
             {% else %}
 
@@ -42,6 +40,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="/login">Login</a></li>
                             <li><a href="/register/">Registreer</a></li>
                         </ul>
                     </li>

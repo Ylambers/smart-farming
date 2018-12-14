@@ -9,13 +9,15 @@
                 <th>Voornaam</th>
                 <th>Achternaam</th>
                 <th>Geboortedatum</th>
+                <th>Rank</th>
             </tr>
             </thead>
             <tbody>
                 <tr>
-                  <td>{{ user.firstName }}</td>
-                  <td>{{ user.lastName }}</td>
-                  <td>{{ user.dateOfBirth|date('d F Y') }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.dateOfBirth|date('d F Y') }}</td>
+                    <td>{{ user.ranking.title }}</td>
                 </tr>
             </tbody>
         </table>
