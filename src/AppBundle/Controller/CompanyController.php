@@ -124,6 +124,27 @@ class CompanyController extends Controller
         return $this->redirectToRoute('company_index');
     }
 
+
+    /**
+     *
+     * @Route("/show/own/company/", name="company_owner_show")
+     */
+    public function showCompanyPageAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneBy(['user' => $this->getUser()]);
+
+        if(!$company) {
+            return $this->redirectToRoute('company_new');
+        }
+
+        
+
+        return $this->render('company/ownersPage.html.twig', array(
+            'company' => $company,
+        ));
+    }
+
     /**
      * Creates a form to delete a company entity.
      *
