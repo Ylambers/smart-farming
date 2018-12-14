@@ -32,6 +32,12 @@
                         <li>
                             <a href="{{ path('company_edit', { 'id': company.id }) }}">edit</a>
                         </li>
+
+                        <li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <a href="{{ path('admin_accept_company', { 'id': company.id }) }}">Accepteer bedrijf</a>
+                            {% endif %}
+                        </li>
                     </ul>
                 </td>
             </tr>

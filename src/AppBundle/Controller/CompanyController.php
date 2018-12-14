@@ -39,8 +39,14 @@ class CompanyController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $this->getUser()->getId()]);
+
         $company = new Company();
         $form = $this->createForm('AppBundle\Form\CompanyType', $company);
+
+        $company->setUser($user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

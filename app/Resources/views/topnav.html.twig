@@ -1,3 +1,17 @@
+{% block flashMessage %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div>
+                <input type="checkbox" id="one" class="hidden" name="ossm">
+                <label for="one" class="alert-message">
+                    <strong> <i class="fas fa-exclamation-triangle"> </i> </strong>{{ message }}
+                    <span class="close">×</span>
+                </label>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -27,6 +41,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('show_all_users') }}">Gebruikers</a></li>
+                            <li><a href="{{ path('admin_show_companies') }}">Bedrijven</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -50,6 +65,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bedrijven<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a></li>
+                            <li><a href="{{ path('company_index') }}">Bekijk bedrijf</a></li>
                         </ul>
                     </li>
                 </ul>

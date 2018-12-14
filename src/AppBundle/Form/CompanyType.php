@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +15,12 @@ class CompanyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')->add('description')->add('websiteUrl')->add('kvk');
+        $builder
+            ->add('title')
+            ->add('description')
+            ->add('websiteUrl')
+            ->add('kvk');
+
     }/**
      * {@inheritdoc}
      */
