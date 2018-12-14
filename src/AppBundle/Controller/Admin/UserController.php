@@ -8,8 +8,10 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Form\Dashboard\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin/dashboard/users")
@@ -46,13 +48,32 @@ class UserController extends Controller
     /**
      * @Route("/edit_user_details/{id}", name="edit_user_details")
      */
-    public function editUserDetails($id)
+    public function editUserDetails(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
 
-        return $this->render(':dashboard/user:details.html.twig', [
-            'user' => $user
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
+
+        if (!$user){
+            return $this->redirect('/user');
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($data);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('show_all_users'));
+        }
+
+        return $this->render(':dashboard/user:edit.html.twig',[
+            'form' => $form->createView()
         ]);
     }
 }
