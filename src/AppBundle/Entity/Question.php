@@ -50,11 +50,12 @@ class Question
     private $datePosted;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
-     * @ORM\Column(name="answered", type="boolean", nullable=true)
+     * @ORM\Column(name="date_edited", type="datetime", nullable=true)
      */
-    private $answered;
+    private $dateEdited;
+
 
     /**
      * @var bool
@@ -181,29 +182,6 @@ class Question
         return $this->datePosted;
     }
 
-    /**
-     * Set answered
-     *
-     * @param boolean $answered
-     *
-     * @return Question
-     */
-    public function setAnswered($answered)
-    {
-        $this->answered = $answered;
-
-        return $this;
-    }
-
-    /**
-     * Get answered
-     *
-     * @return bool
-     */
-    public function getAnswered()
-    {
-        return $this->answered;
-    }
 
     /**
      * Set solved
@@ -260,6 +238,23 @@ class Question
     {
         $this->category = $category;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEdited()
+    {
+        return $this->dateEdited;
+    }
+
+    /**
+     * @param \DateTime $dateEdited
+     */
+    public function setDateEdited($dateEdited)
+    {
+        $this->dateEdited = $dateEdited;
+    }
+
 
 }
 

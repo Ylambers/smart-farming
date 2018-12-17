@@ -51,6 +51,18 @@ class Company
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
+     * @ORM\JoinColumn(name="verifiedBy", referencedColumnName="id", nullable=true)
+     */
+    private $verifiedBy;
+
+    /**
      * Get id
      *
      * @return int
@@ -155,5 +167,39 @@ class Company
     {
         return $this->kvk;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVerifiedBy()
+    {
+        return $this->verifiedBy;
+    }
+
+    /**
+     * @param mixed $verifiedBy
+     */
+    public function setVerifiedBy($verifiedBy)
+    {
+        $this->verifiedBy = $verifiedBy;
+    }
+
+
 }
 
