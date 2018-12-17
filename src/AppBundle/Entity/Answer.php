@@ -60,7 +60,7 @@ class Answer
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $user_id;
+    private $user;
 
     /**
      * Get id
@@ -191,5 +191,22 @@ class Answer
     {
         return $this->datePosted;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
 }
 

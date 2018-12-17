@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -64,14 +65,33 @@ class QuestionController extends Controller
      * Finds and displays a question entity.
      *
      * @Route("/{id}", name="question_show")
-     * @Method("GET")
+     *
      */
-    public function showAction(Question $question)
+    public function showAction(Request $request,Question $question)
     {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $answer = new Answer();
+
+        $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
+        $answer->setUser($this->getUser());
+        $answer->setDatePosted(new \DateTime());
+
         $deleteForm = $this->createDeleteForm($question);
 
+        $answerForm->handleRequest($request);
+        if($answerForm->isSubmitted() && $answerForm->isValid())
+        {
+            $em->persist($answer);
+            $em->flush();
+
+            $referer = $request->headers->get('referer'); // redirect to last page
+            return $this->redirect($referer);
+        }
         return $this->render('question/show.html.twig', array(
             'question' => $question,
+            'answerForm' => $answerForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

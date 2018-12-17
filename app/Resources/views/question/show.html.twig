@@ -14,6 +14,11 @@
         <p>Bewerkt op: {{ question.dateEdited|date('d F Y H:i') }}</p>
     {% endif %}
     <ul>
+        <h3>Beantwoord vraag!</h3>
+        {{ form_start(answerForm) }}
+        {{ form_widget(answerForm) }}
+        {{ form_end(answerForm) }}
+
         <li>
             <a href="{{ path('question_index') }}">Back to the list</a>
         </li>
