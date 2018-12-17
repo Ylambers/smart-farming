@@ -22,9 +22,9 @@ class Rating
     private $id;
 
     /**
-     * @var bool
+     * @var integer
      *
-     * @ORM\Column(name="vote", type="boolean", nullable=true)
+     * @ORM\Column(name="vote", type="integer", nullable=true)
      */
     private $vote;
 
@@ -41,8 +41,6 @@ class Rating
     private $question;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -51,27 +49,27 @@ class Rating
     }
 
     /**
-     * Set vote
-     *
-     * @param boolean $vote
-     *
-     * @return Rating
+     * @param int $id
      */
-    public function setVote($vote)
+    public function setId($id)
     {
-        $this->vote = $vote;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get vote
-     *
-     * @return bool
+     * @return int
      */
     public function getVote()
     {
         return $this->vote;
+    }
+
+    /**
+     * @param int $vote
+     */
+    public function setVote($vote)
+    {
+        $this->vote = $vote;
     }
 
     /**
@@ -105,6 +103,8 @@ class Rating
     {
         $this->question = $question;
     }
+
+
 
 }
 

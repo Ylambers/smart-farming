@@ -2,9 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Services\ServicesController;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("/user/question")
  */
-class QuestionController extends Controller
+class QuestionController extends ServicesController
 {
     /**
      * Lists all question entities.
@@ -72,6 +72,10 @@ class QuestionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $question]);
 
+        foreach ($givenAnswers as $givenAnswer) {
+            $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
+        }
+
         $answer = new Answer();
 
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
@@ -80,7 +84,6 @@ class QuestionController extends Controller
         $answer->setQuestion($question);
 
         $deleteForm = $this->createDeleteForm($question);
-
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {

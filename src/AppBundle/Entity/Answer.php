@@ -55,6 +55,8 @@ class Answer
      */
     private $question;
 
+    private $votes;
+
     /**
      * @return int
      */
@@ -151,5 +153,20 @@ class Answer
         $this->question = $question;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param mixed $votes
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
+    }
 }
 
