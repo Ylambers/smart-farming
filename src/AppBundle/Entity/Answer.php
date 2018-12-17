@@ -36,20 +36,6 @@ class Answer
     private $mediaPath;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="likes", type="integer", nullable=true)
-     */
-    private $likes;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="dislikes", type="integer", nullable=true)
-     */
-    private $dislikes;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_posted", type="datetime")
@@ -69,10 +55,7 @@ class Answer
      */
     private $question;
 
-
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -81,22 +64,14 @@ class Answer
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Answer
+     * @param int $id
      */
-    public function setDescription($description)
+    public function setId($id)
     {
-        $this->description = $description;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -105,22 +80,14 @@ class Answer
     }
 
     /**
-     * Set mediaPath
-     *
-     * @param string $mediaPath
-     *
-     * @return Answer
+     * @param string $description
      */
-    public function setMediaPath($mediaPath)
+    public function setDescription($description)
     {
-        $this->mediaPath = $mediaPath;
-
-        return $this;
+        $this->description = $description;
     }
 
     /**
-     * Get mediaPath
-     *
      * @return string
      */
     public function getMediaPath()
@@ -129,75 +96,27 @@ class Answer
     }
 
     /**
-     * Set likes
-     *
-     * @param integer $likes
-     *
-     * @return Answer
+     * @param string $mediaPath
      */
-    public function setLikes($likes)
+    public function setMediaPath($mediaPath)
     {
-        $this->likes = $likes;
-
-        return $this;
+        $this->mediaPath = $mediaPath;
     }
 
     /**
-     * Get likes
-     *
-     * @return int
-     */
-    public function getLikes()
-    {
-        return $this->likes;
-    }
-
-    /**
-     * Set dislikes
-     *
-     * @param integer $dislikes
-     *
-     * @return Answer
-     */
-    public function setDislikes($dislikes)
-    {
-        $this->dislikes = $dislikes;
-
-        return $this;
-    }
-
-    /**
-     * Get dislikes
-     *
-     * @return int
-     */
-    public function getDislikes()
-    {
-        return $this->dislikes;
-    }
-
-    /**
-     * Set datePosted
-     *
-     * @param \DateTime $datePosted
-     *
-     * @return Answer
-     */
-    public function setDatePosted($datePosted)
-    {
-        $this->datePosted = $datePosted;
-
-        return $this;
-    }
-
-    /**
-     * Get datePosted
-     *
      * @return \DateTime
      */
     public function getDatePosted()
     {
         return $this->datePosted;
+    }
+
+    /**
+     * @param \DateTime $datePosted
+     */
+    public function setDatePosted($datePosted)
+    {
+        $this->datePosted = $datePosted;
     }
 
     /**
@@ -231,7 +150,6 @@ class Answer
     {
         $this->question = $question;
     }
-
 
 }
 
