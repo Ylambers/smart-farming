@@ -70,13 +70,14 @@ class QuestionController extends Controller
     public function showAction(Request $request,Question $question)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $question]);
 
         $answer = new Answer();
 
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
+        $answer->setQuestion($question);
 
         $deleteForm = $this->createDeleteForm($question);
 
@@ -90,6 +91,7 @@ class QuestionController extends Controller
             return $this->redirect($referer);
         }
         return $this->render('question/show.html.twig', array(
+            'givenAnswers' => $givenAnswers,
             'question' => $question,
             'answerForm' => $answerForm->createView(),
             'delete_form' => $deleteForm->createView(),

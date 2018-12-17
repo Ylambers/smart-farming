@@ -21,7 +21,9 @@ class AnswerType extends AbstractType
     {
         $builder
             ->add("description", TextareaType::class,[])
-            ->add("media_path")
+            ->add("media_path", TextType::class, [
+                'required' => false,
+            ])
             ->add("submit", SubmitType::class)
             ->getForm();
     }

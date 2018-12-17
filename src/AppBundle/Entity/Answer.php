@@ -62,6 +62,14 @@ class Answer
      */
     private $user;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Question", inversedBy="id")
+     * @ORM\JoinColumn(name="question", referencedColumnName="id")
+     */
+    private $question;
+
+
     /**
      * Get id
      *
@@ -207,6 +215,23 @@ class Answer
     {
         $this->user = $user;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param mixed $question
+     */
+    public function setQuestion($question)
+    {
+        $this->question = $question;
+    }
+
 
 }
 

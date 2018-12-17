@@ -13,6 +13,17 @@
     {% if question.dateEdited is not null %}
         <p>Bewerkt op: {{ question.dateEdited|date('d F Y H:i') }}</p>
     {% endif %}
+
+
+    <hr>
+
+    {% for answers in givenAnswers %}
+        <div class="alert alert-success" role="alert">
+            <p><strong>{{ answers.description }}</strong></p>
+            <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
+        </div>
+    {% endfor %}
+
     <ul>
         <h3>Beantwoord vraag!</h3>
         {{ form_start(answerForm) }}
