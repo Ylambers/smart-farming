@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Controller\Services\ServicesController;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Rating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
@@ -126,6 +127,30 @@ class QuestionController extends ServicesController
         ));
     }
 
+
+    /**
+     * Displays a form to edit an existing question entity.
+     *
+     * @Route("up_vote/{answer}/{vote}}", name="up_vote_answer")
+     * @Method({"GET", "POST"})
+     */
+    public function upvoteAnswerAction(Request $request,$answer, $vote)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
+
+        $rating = new Rating();
+        $rating->setVote($vote);
+        $rating->setAnswer($objAnswer);
+        $rating->setUser($this->getUser());
+
+        $em->persist($rating);
+        $em->flush();
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
+    }
+
     /**
      * Deletes a question entity.
      *
@@ -145,6 +170,8 @@ class QuestionController extends ServicesController
 
         return $this->redirectToRoute('question_index');
     }
+
+
 
     /**
      * Creates a form to delete a question entity.
