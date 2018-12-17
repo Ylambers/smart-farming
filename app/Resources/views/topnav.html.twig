@@ -48,7 +48,7 @@
 
 
 
-            {% elseif is_granted('ROLE_USER') -%}
+            {% elseif is_granted('ROLE_USER') or is_granted('ROLE_SUPER_ADMIN') -%}
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
