@@ -1,0 +1,45 @@
+{% block admin %}
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('show_all_users') }}">Gebruikers</a></li>
+            <li><a href="{{ path('admin_show_companies') }}">Bedrijven</a></li>
+        </ul>
+    </li>
+
+{% endblock %}
+
+{% block user %}
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vragen<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('question_index') }}">Bekijk vragen</a></li>
+            <li><a href="{{ path('question_new') }}">Stel een vraag</a></li>
+
+        </ul>
+    </li>
+    
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bedrijven<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a></li>
+            <li><a href="{{ path('company_index') }}">Bekijk bedrijven</a></li>
+            <li><a href="{{ path('company_owner_show') }}">Bekijk eigen bedrijf</a></li>
+        </ul>
+    </li>
+{% endblock %}
+
+
+{% block default %}
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li> <a href="/profile/change-password">Wachtwoord veranderen</a></li>
+            <li><a href="{{ path('logout') }}">Uitloggen</a></li>
+        </ul>
+    </li>
+
+{% endblock %}
