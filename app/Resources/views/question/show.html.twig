@@ -19,11 +19,14 @@
 
     {% for answers in givenAnswers %}
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-2">
+                <h2>{{ answers.votes }}</h2>
+            </div>
+            <div class="col-md-8">
                 <div class="alert alert-success" role="alert">
                     <p><strong>{{ answers.description }}</strong></p>
                     <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
-                    <p>{{ answers.votes }}</p>
+                    <p>}</p>
                 </div>
             </div>
 
