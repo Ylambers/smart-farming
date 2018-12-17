@@ -1,3 +1,7 @@
+app_question:
+    resource: "@AppBundle/Controller/QuestionController.php"
+    type:     annotation
+
 app_company:
     resource: "@AppBundle/Controller/CompanyController.php"
     type:     annotation
