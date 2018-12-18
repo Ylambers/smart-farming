@@ -72,7 +72,7 @@ class Question
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="id")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     private $category;
 
