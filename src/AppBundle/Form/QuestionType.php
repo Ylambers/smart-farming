@@ -23,25 +23,15 @@ class QuestionType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => function ($category) {
-                    return $category->getTitle() . " | ";
+                    return $category->getTitle();
                 },
-                'group_by' => function($choiceValue){
 
-                    if($choiceValue->getSubcategory() == null){
-                        return $choiceValue->getTitle();
-                    }
+            ])
+            ->add('subCategory')
 
-                }
-            ]);
+        ;
     }
 
-//'group_by' => function($choiceValue, $key, $value) {
-//    if ($choiceValue <= new \DateTime('+3 days')) {
-//        return 'Soon';
-//    } else {
-//        return 'Later';
-//    }
-//},
 
     /**
      * {@inheritdoc}
