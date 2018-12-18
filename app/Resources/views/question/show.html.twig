@@ -2,8 +2,31 @@
 
 {% block content %}
 <div class="container top-container">
-    <h1>{{ question.votes }}| {{ question.title }}</h1>
-    <h3>{{ question.category.title }}</h3>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong> | {{ question.category.title }} </h1>
+        </div>
+
+        <div class="col-md-1">
+            <h2>{{ question.votes }}</h2>
+        </div>
+
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': 1 }) }}">+</a></h2>
+        </div>
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': -1 }) }}">-</a>
+            </h2>
+        </div>
+   </div>
+
+    <h3></h3>
     <p>
         {{ question.text }}
     </p>

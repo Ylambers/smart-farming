@@ -135,7 +135,7 @@ class QuestionController extends ServicesController
 
     /**
      *
-     * @Route("up_vote/{answer}/{vote}}", name="up_vote_answer")
+     * @Route("up_vote/answer/{answer}/{vote}}", name="up_vote_answer")
      * @Method({"GET", "POST"})
      */
     public function upvoteAnswerAction(Request $request,$answer, $vote)
@@ -144,6 +144,7 @@ class QuestionController extends ServicesController
         $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
 
         $rating = new Rating();
+
         $rating->setVote($vote);
         $rating->setAnswer($objAnswer);
         $rating->setUser($this->getUser());
@@ -157,7 +158,7 @@ class QuestionController extends ServicesController
 
     /**
      *
-     * @Route("up_vote/{question}/{vote}}", name="up_vote_question")
+     * @Route("up_vote/question/{question}/{vote}}", name="up_vote_question")
      * @Method({"GET", "POST"})
      */
     public function upvoteQuestionAction(Request $request,$question, $vote)
@@ -168,7 +169,7 @@ class QuestionController extends ServicesController
         $rating = new Rating();
         $rating->setVote($vote);
         $rating->setUser($this->getUser());
-        $rating->setQuestion($question);
+        $rating->setQuestion($objQuestion);
 
         $em->persist($rating);
         $em->flush();
