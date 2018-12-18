@@ -89,7 +89,6 @@ class QuestionController extends ServicesController
         $answer->setQuestion($question);
         $question->setVotes($this->getQuestionVotes($question));
 
-        $deleteForm = $this->createDeleteForm($question);
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {
