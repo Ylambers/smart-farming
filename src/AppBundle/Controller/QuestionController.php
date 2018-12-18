@@ -26,7 +26,7 @@ class QuestionController extends ServicesController
     {
         $em = $this->getDoctrine()->getManager();
         $questions = $em->getRepository('AppBundle:Question')->findAll();
-        $category = $em->getRepository('AppBundle:Category')->findBy(['subCategory' => null]);
+        $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($questions as $question) {
             $question->setVotes($this->getQuestionVotes($question));
@@ -48,7 +48,7 @@ class QuestionController extends ServicesController
     {
         $em = $this->getDoctrine()->getManager();
         $questions = $em->getRepository('AppBundle:Question')->findBy(['category' => $id]);
-        $category = $em->getRepository('AppBundle:Category')->findBy(['subCategory' => null]);
+        $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($questions as $question) {
             $question->setVotes($this->getQuestionVotes($question));
