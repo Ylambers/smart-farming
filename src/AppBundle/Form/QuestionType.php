@@ -20,10 +20,8 @@ class QuestionType extends AbstractType
             ->add('mediaPath')
             ->add('solved')
             ->add('category', EntityType::class, [
-                'class' => 'AppBundle:Category',
-                'label' => 'Categorie',
-                'choice_label' => function ($cat) {
-                    return $cat->getTitle() . " | " . $cat->getDescription();
+                'query_builder' => function( $repo) {
+
                 }
             ]);
     }/**
