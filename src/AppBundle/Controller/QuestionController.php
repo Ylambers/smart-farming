@@ -25,17 +25,41 @@ class QuestionController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $questions = $em->getRepository('AppBundle:Question')->findAll();
+        $category = $em->getRepository('AppBundle:Category')->findBy(['subCategory' => null]);
 
         foreach ($questions as $question) {
             $question->setVotes($this->getQuestionVotes($question));
         }
 
         return $this->render('question/index.html.twig', array(
+            'category' => $category,
             'questions' => $questions,
         ));
     }
+
+    /**
+     * Lists all question entities.
+     *
+     * @Route("/search/{id}", name="question_search_on_key")
+     * @Method("GET")
+     */
+    public function searchQuestionAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $questions = $em->getRepository('AppBundle:Question')->findBy(['category' => $id]);
+        $category = $em->getRepository('AppBundle:Category')->findBy(['subCategory' => null]);
+
+        foreach ($questions as $question) {
+            $question->setVotes($this->getQuestionVotes($question));
+        }
+
+        return $this->render('question/index.html.twig', array(
+            'category' => $category,
+            'questions' => $questions,
+        ));
+    }
+
 
     /**
      * Creates a new question entity.
