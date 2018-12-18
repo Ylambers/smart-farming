@@ -9,8 +9,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong> | {{ question.category.title }} </h1>
+            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong> |  {% if question.category.title is not null %}  {{ question.category.title }} {% endif %} </h1>
         </div>
+
+        {% if  %}
 
         <div class="col-md-1">
             <h2>{{ question.votes }}</h2>
@@ -29,7 +31,7 @@
         {{ question.text }}
     </p>
 
-    <p><strong>{{ question.user.username }} </strong>| {{ question.user.ranking.title }}</p>
+    <p><strong>{{ question.user.username }} </strong>| {% if question.user.ranking.title is not null %} {{ question.user.ranking.title }} {% endif %}</p>
     <p>Gepost op: {{ question.datePosted|date('d F Y H:i') }}</p>
     {% if question.dateEdited is not null %}
         <p>Bewerkt op: {{ question.dateEdited|date('d F Y H:i') }}</p>
