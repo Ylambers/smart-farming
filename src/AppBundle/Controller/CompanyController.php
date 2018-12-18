@@ -2,9 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Services\ServicesController;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\CompanyMember;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("/user/company")
  */
-class CompanyController extends Controller
+class CompanyController extends ServicesController
 {
     /**
      * Lists all company entities.
@@ -26,6 +26,7 @@ class CompanyController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $companies = $em->getRepository('AppBundle:Company')->findAll();
+
 
         return $this->render('company/index.html.twig', array(
             'companies' => $companies,
