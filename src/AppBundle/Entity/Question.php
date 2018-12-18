@@ -76,6 +76,8 @@ class Question
      */
     private $category;
 
+    private $votes;
+
     /**
      * Get id
      *
@@ -255,6 +257,20 @@ class Question
         $this->dateEdited = $dateEdited;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
 
+    /**
+     * @param mixed $votes
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
+    }
 }
 

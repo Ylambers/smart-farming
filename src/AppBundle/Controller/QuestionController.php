@@ -28,6 +28,10 @@ class QuestionController extends ServicesController
 
         $questions = $em->getRepository('AppBundle:Question')->findAll();
 
+        foreach ($questions as $question) {
+            $question->setVotes($this->getQuestionVotes($question));
+        }
+
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
         ));
@@ -83,6 +87,7 @@ class QuestionController extends ServicesController
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
         $answer->setQuestion($question);
+        $question->setVotes($this->getQuestionVotes($question));
 
         $deleteForm = $this->createDeleteForm($question);
         $answerForm->handleRequest($request);
@@ -129,7 +134,6 @@ class QuestionController extends ServicesController
 
 
     /**
-     * Displays a form to edit an existing question entity.
      *
      * @Route("up_vote/{answer}/{vote}}", name="up_vote_answer")
      * @Method({"GET", "POST"})
@@ -143,6 +147,28 @@ class QuestionController extends ServicesController
         $rating->setVote($vote);
         $rating->setAnswer($objAnswer);
         $rating->setUser($this->getUser());
+
+        $em->persist($rating);
+        $em->flush();
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
+    }
+
+    /**
+     *
+     * @Route("up_vote/{question}/{vote}}", name="up_vote_question")
+     * @Method({"GET", "POST"})
+     */
+    public function upvoteQuestionAction(Request $request,$question, $vote)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $objQuestion= $em->getRepository('AppBundle:Question')->findOneBy(['id' => $question]);
+
+        $rating = new Rating();
+        $rating->setVote($vote);
+        $rating->setUser($this->getUser());
+        $rating->setQuestion($question);
 
         $em->persist($rating);
         $em->flush();

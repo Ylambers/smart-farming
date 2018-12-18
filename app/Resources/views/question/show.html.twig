@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container top-container">
-    <h1>{{ question.title }}</h1>
+    <h1>{{ question.votes }}| {{ question.title }}</h1>
     <h3>{{ question.category.title }}</h3>
     <p>
         {{ question.text }}
@@ -26,7 +26,7 @@
                 <div class="alert alert-success" role="alert">
                     <p><strong>{{ answers.description }}</strong></p>
                     <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
-                    <p>}</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -35,7 +35,6 @@
                 <a href="{{ path('up_vote_answer', { 'answer': answers.id, 'vote': -1 }) }}">-</a>
             </div>
         </div>
-
     {% endfor %}
 
     <ul>
