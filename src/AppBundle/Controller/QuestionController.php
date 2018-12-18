@@ -115,11 +115,13 @@ class QuestionController extends ServicesController
      */
     public function editAction(Request $request, Question $question)
     {
-        $deleteForm = $this->createDeleteForm($question);
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $question->setDateEdited(new \DateTime());
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
@@ -128,7 +130,6 @@ class QuestionController extends ServicesController
         return $this->render('question/edit.html.twig', array(
             'question' => $question,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -178,41 +179,4 @@ class QuestionController extends ServicesController
         return $this->redirect($referer);
     }
 
-    /**
-     * Deletes a question entity.
-     *
-     * @Route("/{id}", name="question_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Question $question)
-    {
-        $form = $this->createDeleteForm($question);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($question);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('question_index');
-    }
-
-
-
-    /**
-     * Creates a form to delete a question entity.
-     *
-     * @param Question $question The question entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Question $question)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('question_delete', array('id' => $question->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }
