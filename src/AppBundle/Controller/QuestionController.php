@@ -102,7 +102,6 @@ class QuestionController extends ServicesController
             'givenAnswers' => $givenAnswers,
             'question' => $question,
             'answerForm' => $answerForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
