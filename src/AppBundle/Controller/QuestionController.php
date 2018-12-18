@@ -2,9 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Services\ServicesController;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Rating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("/user/question")
  */
-class QuestionController extends Controller
+class QuestionController extends ServicesController
 {
     /**
      * Lists all question entities.
@@ -70,16 +71,20 @@ class QuestionController extends Controller
     public function showAction(Request $request,Question $question)
     {
         $em = $this->getDoctrine()->getManager();
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $question]);
 
+        foreach ($givenAnswers as $givenAnswer) {
+            $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
+        }
 
         $answer = new Answer();
 
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
+        $answer->setQuestion($question);
 
         $deleteForm = $this->createDeleteForm($question);
-
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {
@@ -90,6 +95,7 @@ class QuestionController extends Controller
             return $this->redirect($referer);
         }
         return $this->render('question/show.html.twig', array(
+            'givenAnswers' => $givenAnswers,
             'question' => $question,
             'answerForm' => $answerForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -121,6 +127,30 @@ class QuestionController extends Controller
         ));
     }
 
+
+    /**
+     * Displays a form to edit an existing question entity.
+     *
+     * @Route("up_vote/{answer}/{vote}}", name="up_vote_answer")
+     * @Method({"GET", "POST"})
+     */
+    public function upvoteAnswerAction(Request $request,$answer, $vote)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
+
+        $rating = new Rating();
+        $rating->setVote($vote);
+        $rating->setAnswer($objAnswer);
+        $rating->setUser($this->getUser());
+
+        $em->persist($rating);
+        $em->flush();
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
+    }
+
     /**
      * Deletes a question entity.
      *
@@ -140,6 +170,8 @@ class QuestionController extends Controller
 
         return $this->redirectToRoute('question_index');
     }
+
+
 
     /**
      * Creates a form to delete a question entity.

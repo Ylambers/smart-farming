@@ -1,104 +1,67 @@
-{% block flashMessage %}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div>
-                <input type="checkbox" id="one" class="hidden" name="ossm">
-                <label for="one" class="alert-message">
-                    <strong> <i class="fas fa-exclamation-triangle"> </i> </strong>{{ message }}
-                    <span class="close">×</span>
-                </label>
-            </div>
+{% block menu %}
+
+    {% block flashMessage %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div>
+                    <input type="checkbox" id="one" class="hidden" name="ossm">
+                    <label for="one" class="alert-message">
+                        <strong> <i class="fas fa-exclamation-triangle"> </i> </strong>{{ message }}
+                        <span class="close">×</span>
+                    </label>
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    {% endblock %}
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div id="navbar" class="collapse navbar-collapse">
+                {% if is_granted('ROLE_SUPER_ADMIN') -%}
+
+                    <ul class="nav navbar-nav navbar-right">
+                        {{ block('admin', 'menuItems.html.twig') }}
+                        {{ block('user', 'menuItems.html.twig') }}
+                        {{ block('default', 'menuItems.html.twig') }}
+                    </ul>
+
+                {% elseif is_granted('ROLE_USER') or is_granted('ROLE_SUPER_ADMIN') -%}
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        {{ block('user', 'menuItems.html.twig') }}
+                        {{ block('default', 'menuItems.html.twig') }}
+                    </ul>
+
+
+                {% else %}
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/login">Login</a></li>
+                                <li><a href="/register/">Registreer</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+
+
+
 {% endblock %}
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div id="navbar" class="collapse navbar-collapse">
-            {% if is_granted('ROLE_SUPER_ADMIN') -%}
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li> <a href="/profile/change-password">Wachtwoord veranderen</a></li>
-                            <li><a href="{{ path('logout') }}">Uitloggen</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('show_all_users') }}">Gebruikers</a></li>
-                            <li><a href="{{ path('admin_show_companies') }}">Bedrijven</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-
-
-            {% elseif is_granted('ROLE_USER') -%}
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li> <a href="/profile/change-password">Wachtwoord veranderen</a></li>
-                            <li><a href="{{ path('logout') }}">Uitloggen</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vragen<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('question_index') }}">Bekijk vragen</a></li>
-                            <li><a href="{{ path('question_new') }}">Stel een vraag</a></li>
-
-                        </ul>
-                    </li>
-                </ul>
-
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bedrijven<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a></li>
-                            <li><a href="{{ path('company_index') }}">Bekijk bedrijven</a></li>
-                            <li><a href="{{ path('company_owner_show') }}">Bekijk eigen bedrijf</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-
-
-            {% else %}
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="/register/">Registreer</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-            {% endif %}
-
-        </div>
-    </div>
-</nav>
