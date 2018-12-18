@@ -45,6 +45,12 @@ class QuestionController extends ServicesController
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository('AppBundle:Category')->findMainCategory();
+        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
+
+
+
         $question = new Question();
         $form = $this->createForm('AppBundle\Form\QuestionType', $question);
         $form->handleRequest($request);
