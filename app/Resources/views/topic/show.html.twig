@@ -9,31 +9,31 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong></h1>
-            <h3> {% if question.category is null  %} Geen categorie {% else %} {{ question.category.title }} {% endif %} {% if question.subCategory is null %}-{% else %}  {{ question.subCategory }} {% endif %}</h3>
+            <h1><strong> {% if topic.solved %} Opgelost |{% endif %}  {{ topic.title }}</strong></h1>
+            <h3> {% if topic.category is null  %} Geen categorie {% else %} {{ topic.category.title }} {% endif %} {% if topic.subCategory is null %}-{% else %}  {{ topic.subCategory }} {% endif %}</h3>
         </div>
 
         <div class="col-md-1">
-            <h2>{{ question.votes }}</h2>
+            <h2>{{ topic.votes }}</h2>
         </div>
 
         <div class="col-md-1">
-            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': 1 }) }}">+</a></h2>
+            <h2>            <a href="{{ path('up_vote_topic', { 'topic': topic.id, 'vote': 1 }) }}">+</a></h2>
         </div>
         <div class="col-md-1">
-            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': -1 }) }}">-</a>
+            <h2>            <a href="{{ path('up_vote_topic', { 'topic': topic.id, 'vote': -1 }) }}">-</a>
             </h2>
         </div>
    </div>
 
     <p>
-        {{ question.text }}
+        {{ topic.text }}
     </p>
 
-    <p><strong>{{ question.user.username }} </strong>| {% if question.user.ranking is null %} geen rank {% else %} {{ question.user.ranking.title }} {% endif %}</p>
-    <p>Gepost op: {{ question.datePosted|date('d F Y H:i') }}</p>
-    {% if question.dateEdited is not null %}
-        <p>Bewerkt op: {{ question.dateEdited|date('d F Y H:i') }}</p>
+    <p><strong>{{ topic.user.username }} </strong>| {% if topic.user.ranking is null %} geen rank {% else %} {{ topic.user.ranking.title }} {% endif %}</p>
+    <p>Gepost op: {{ topic.datePosted|date('d F Y H:i') }}</p>
+    {% if topic.dateEdited is not null %}
+        <p>Bewerkt op: {{ topic.dateEdited|date('d F Y H:i') }}</p>
     {% endif %}
 
 
@@ -72,7 +72,7 @@
         {% if is_granted('ROLE_SUPER_ADMIN') %}
 
             <li>
-                <a href="{{ path('question_edit', { 'id': question.id }) }}">Edit</a>
+                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Edit</a>
             </li>
 
         {% endif %}

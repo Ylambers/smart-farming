@@ -25,38 +25,38 @@ class TopicController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository('AppBundle:Topic')->findAll();
+        $topics = $em->getRepository('AppBundle:Topic')->findAll();
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
-        foreach ($questions as $question) {
-            $question->setVotes($this->getQuestionVotes($question));
+        foreach ($topics as $topic) {
+            $topic->setVotes($this->getQuestionVotes($topic));
         }
 
-        return $this->render('question/index.html.twig', array(
+        return $this->render('topic/index.html.twig', array(
             'category' => $category,
-            'questions' => $questions,
+            'topics' => $topics,
         ));
     }
 
     /**
      * Lists all question entities.
      *
-     * @Route("/search/{id}", name="question_search_on_key")
+     * @Route("/search/{id}", name="topic_search_on_key")
      * @Method("GET")
      */
     public function searchQuestionAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository('Topic')->findBy(['category' => $id]);
+        $topics = $em->getRepository('AppBundle:Topic')->findBy(['category' => $id]);
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
-        foreach ($questions as $question) {
-            $question->setVotes($this->getQuestionVotes($question));
+        foreach ($topics as $topic) {
+            $topic->setVotes($this->getQuestionVotes($topic));
         }
 
-        return $this->render('question/index.html.twig', array(
+        return $this->render('topic/index.html.twig', array(
             'category' => $category,
-            'questions' => $questions,
+            'topics' => $topics,
         ));
     }
 
@@ -75,23 +75,23 @@ class TopicController extends ServicesController
 
 
 
-        $question = new Topic();
-        $form = $this->createForm('AppBundle\Form\QuestionType', $question);
+        $topic = new Topic();
+        $form = $this->createForm('AppBundle\Form\QuestionType', $topic);
         $form->handleRequest($request);
 
-        $question->setUser($this->getUser());
-        $question->setDatePosted(new \DateTime());
+        $topic->setUser($this->getUser());
+        $topic->setDatePosted(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
+            $em->persist($topic);
             $em->flush();
 
-            return $this->redirectToRoute('question_show', array('id' => $question->getId()));
+            return $this->redirectToRoute('question_show', array('id' => $topic->getId()));
         }
 
-        return $this->render('question/new.html.twig', array(
-            'question' => $question,
+        return $this->render('topic/new.html.twig', array(
+            'topic' => $topic,
             'form' => $form->createView(),
         ));
     }
@@ -99,13 +99,13 @@ class TopicController extends ServicesController
     /**
      * Finds and displays a question entity.
      *
-     * @Route("/{id}", name="question_show")
+     * @Route("/{id}", name="topic_show")
      *
      */
-    public function showAction(Request $request, Topic $question)
+    public function showAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
-        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $question]);
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $topic]);
 
         foreach ($givenAnswers as $givenAnswer) {
             $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
@@ -116,8 +116,8 @@ class TopicController extends ServicesController
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
-        $answer->setQuestion($question);
-        $question->setVotes($this->getQuestionVotes($question));
+        $answer->setQuestion($topic);
+        $topic->setVotes($this->getQuestionVotes($topic));
 
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
@@ -128,35 +128,35 @@ class TopicController extends ServicesController
             $referer = $request->headers->get('referer'); // redirect to last page
             return $this->redirect($referer);
         }
-        return $this->render('question/show.html.twig', array(
+        return $this->render('topic/show.html.twig', array(
             'givenAnswers' => $givenAnswers,
-            'question' => $question,
+            'topic' => $topic,
             'answerForm' => $answerForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing question entity.
+     * Displays a form to edit an existing topic entity.
      *
-     * @Route("/{id}/edit", name="question_edit")
+     * @Route("/{id}/edit", name="topic_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Topic $question)
+    public function editAction(Request $request, Topic $topic)
     {
-        $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
+        $editForm = $this->createForm('AppBundle\Form\QuestionType', $topic);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-            $question->setDateEdited(new \DateTime());
+            $topic->setDateEdited(new \DateTime());
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
+            return $this->redirectToRoute('question_edit', array('id' => $topic->getId()));
         }
 
         return $this->render('question/edit.html.twig', array(
-            'question' => $question,
+            'question' => $topic,
             'edit_form' => $editForm->createView(),
         ));
     }
@@ -187,13 +187,13 @@ class TopicController extends ServicesController
 
     /**
      *
-     * @Route("up_vote/question/{question}/{vote}}", name="up_vote_question")
+     * @Route("up_vote/topic/{topic}/{vote}}", name="up_vote_topic")
      * @Method({"GET", "POST"})
      */
-    public function upvoteQuestionAction(Request $request,$question, $vote)
+    public function upvoteQuestionAction(Request $request,$topic, $vote)
     {
         $em = $this->getDoctrine()->getManager();
-        $objQuestion= $em->getRepository('AppBundle:Topic')->findOneBy(['id' => $question]);
+        $objQuestion= $em->getRepository('AppBundle:Topic')->findOneBy(['id' => $topic]);
 
         $rating = new Rating();
         $rating->setVote($vote);
