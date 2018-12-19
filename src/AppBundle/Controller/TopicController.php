@@ -12,20 +12,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Question controller.
  *
- * @Route("/user/question")
+ * @Route("/user/topic")
  */
 class TopicController extends ServicesController
 {
     /**
      * Lists all question entities.
      *
-     * @Route("/", name="question_index")
+     * @Route("/", name="topic_index")
      * @Method("GET")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository('Topic')->findAll();
+        $questions = $em->getRepository('AppBundle:Topic')->findAll();
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($questions as $question) {
@@ -64,7 +64,7 @@ class TopicController extends ServicesController
     /**
      * Creates a new question entity.
      *
-     * @Route("/new", name="question_new")
+     * @Route("/new", name="topic_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
