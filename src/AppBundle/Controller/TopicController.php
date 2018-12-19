@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("/user/question")
  */
-class QuestionController extends ServicesController
+class TopicController extends ServicesController
 {
     /**
      * Lists all question entities.
