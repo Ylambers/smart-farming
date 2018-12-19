@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,21 @@ class CompanyMemberType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('company')->add('user');
+        $builder
+//            ->add('company')
+            ->add('company', EntityType::class, [
+                'class' => 'AppBundle:CompanyMember',
+                'label' => "Functie",
+                'choice_label' => function ($category) {
+                    return $category->getCompany()->getTitle() ;
+                }])
+//            ->add('user')
+            ->add('user', EntityType::class, [
+                'class' => 'AppBundle:CompanyMember',
+                'label' => "Functie",
+                'choice_label' => function ($category) {
+                    return $category->getUser()->getUsername() ;
+                }]);
     }/**
      * {@inheritdoc}
      */

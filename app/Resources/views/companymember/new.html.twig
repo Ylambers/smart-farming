@@ -1,6 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends '::base.html.twig' %}
 
-{% block body %}
+{% block content %}
+<div class="container top-container">
     <h1>Companymember creation</h1>
 
     {{ form_start(form) }}
@@ -13,4 +14,5 @@
             <a href="{{ path('user_companymember_index') }}">Back to the list</a>
         </li>
     </ul>
+</div>
 {% endblock %}
