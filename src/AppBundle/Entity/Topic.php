@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Question
  *
- * @ORM\Table(name="question")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
+ * @ORM\Table(name="topic")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomRepository")
  */
-class Question
+class Topic
 {
     /**
      * @var int
@@ -100,7 +100,7 @@ class Question
      *
      * @param string $title
      *
-     * @return Question
+     * @return Topic
      */
     public function setTitle($title)
     {
@@ -124,7 +124,7 @@ class Question
      *
      * @param string $text
      *
-     * @return Question
+     * @return Topic
      */
     public function setText($text)
     {
@@ -148,7 +148,7 @@ class Question
      *
      * @param string $mediaPath
      *
-     * @return Question
+     * @return Topic
      */
     public function setMediaPath($mediaPath)
     {
@@ -172,7 +172,7 @@ class Question
      *
      * @param \DateTime $datePosted
      *
-     * @return Question
+     * @return Topic
      */
     public function setDatePosted($datePosted)
     {
@@ -197,7 +197,7 @@ class Question
      *
      * @param boolean $solved
      *
-     * @return Question
+     * @return Topic
      */
     public function setSolved($solved)
     {

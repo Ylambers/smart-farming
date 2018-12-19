@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Controller\Services\ServicesController;
 use AppBundle\Entity\Answer;
-use AppBundle\Entity\Question;
+use AppBundle\Entity\Topic;
 use AppBundle\Entity\Rating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class QuestionController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository('AppBundle:Question')->findAll();
+        $questions = $em->getRepository('Topic')->findAll();
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($questions as $question) {
@@ -47,7 +47,7 @@ class QuestionController extends ServicesController
     public function searchQuestionAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository('AppBundle:Question')->findBy(['category' => $id]);
+        $questions = $em->getRepository('Topic')->findBy(['category' => $id]);
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($questions as $question) {
@@ -75,7 +75,7 @@ class QuestionController extends ServicesController
 
 
 
-        $question = new Question();
+        $question = new Topic();
         $form = $this->createForm('AppBundle\Form\QuestionType', $question);
         $form->handleRequest($request);
 
@@ -102,7 +102,7 @@ class QuestionController extends ServicesController
      * @Route("/{id}", name="question_show")
      *
      */
-    public function showAction(Request $request,Question $question)
+    public function showAction(Request $request, Topic $question)
     {
         $em = $this->getDoctrine()->getManager();
         $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $question]);
@@ -141,7 +141,7 @@ class QuestionController extends ServicesController
      * @Route("/{id}/edit", name="question_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Question $question)
+    public function editAction(Request $request, Topic $question)
     {
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
         $editForm->handleRequest($request);
@@ -193,7 +193,7 @@ class QuestionController extends ServicesController
     public function upvoteQuestionAction(Request $request,$question, $vote)
     {
         $em = $this->getDoctrine()->getManager();
-        $objQuestion= $em->getRepository('AppBundle:Question')->findOneBy(['id' => $question]);
+        $objQuestion= $em->getRepository('Topic')->findOneBy(['id' => $question]);
 
         $rating = new Rating();
         $rating->setVote($vote);

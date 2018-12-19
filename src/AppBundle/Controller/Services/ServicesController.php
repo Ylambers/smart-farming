@@ -10,7 +10,7 @@ namespace AppBundle\Controller\Services;
 
 
 use AppBundle\Entity\Answer;
-use AppBundle\Entity\Question;
+use AppBundle\Entity\Topic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -21,7 +21,7 @@ class ServicesController extends Controller
 {
 
     /**
-     * @param Question $question
+     * @param Topic $question
      * @return int
      *
      * Counts gives votes for answers
@@ -42,12 +42,12 @@ class ServicesController extends Controller
 
 
     /**
-     * @param Question $question
+     * @param Topic $question
      * @return int
      *
      * Counts gives votes for answers
      */
-    public function getQuestionVotes(Question $question)
+    public function getQuestionVotes(Topic $question)
     {
         $em = $this->getDoctrine()->getManager();
 

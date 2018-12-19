@@ -39,7 +39,7 @@ class QuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Question'
+            'data_class' => 'Topic'
         ));
     }
 
