@@ -41,4 +41,24 @@ class ServicesController extends Controller
     }
 
 
+    /**
+     * @param Question $question
+     * @return int
+     *
+     * Counts gives votes for answers
+     */
+    public function getQuestionVotes(Question $question)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $rating = $em->getRepository('AppBundle:Rating')->findBy(['question' => $question]);
+
+        $total = 0;
+
+        foreach ($rating as $votes){
+            $total += $votes->getVote();
+        }
+
+        return $total;
+    }
 }

@@ -25,13 +25,41 @@ class QuestionController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $questions = $em->getRepository('AppBundle:Question')->findAll();
+        $category = $em->getRepository('AppBundle:Category')->findAll();
+
+        foreach ($questions as $question) {
+            $question->setVotes($this->getQuestionVotes($question));
+        }
 
         return $this->render('question/index.html.twig', array(
+            'category' => $category,
             'questions' => $questions,
         ));
     }
+
+    /**
+     * Lists all question entities.
+     *
+     * @Route("/search/{id}", name="question_search_on_key")
+     * @Method("GET")
+     */
+    public function searchQuestionAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $questions = $em->getRepository('AppBundle:Question')->findBy(['category' => $id]);
+        $category = $em->getRepository('AppBundle:Category')->findAll();
+
+        foreach ($questions as $question) {
+            $question->setVotes($this->getQuestionVotes($question));
+        }
+
+        return $this->render('question/index.html.twig', array(
+            'category' => $category,
+            'questions' => $questions,
+        ));
+    }
+
 
     /**
      * Creates a new question entity.
@@ -41,6 +69,12 @@ class QuestionController extends ServicesController
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository('AppBundle:Category')->findMainCategory();
+        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
+
+
+
         $question = new Question();
         $form = $this->createForm('AppBundle\Form\QuestionType', $question);
         $form->handleRequest($request);
@@ -83,8 +117,8 @@ class QuestionController extends ServicesController
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
         $answer->setQuestion($question);
+        $question->setVotes($this->getQuestionVotes($question));
 
-        $deleteForm = $this->createDeleteForm($question);
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {
@@ -98,7 +132,6 @@ class QuestionController extends ServicesController
             'givenAnswers' => $givenAnswers,
             'question' => $question,
             'answerForm' => $answerForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -110,11 +143,13 @@ class QuestionController extends ServicesController
      */
     public function editAction(Request $request, Question $question)
     {
-        $deleteForm = $this->createDeleteForm($question);
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $question->setDateEdited(new \DateTime());
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
@@ -123,15 +158,13 @@ class QuestionController extends ServicesController
         return $this->render('question/edit.html.twig', array(
             'question' => $question,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
 
     /**
-     * Displays a form to edit an existing question entity.
      *
-     * @Route("up_vote/{answer}/{vote}}", name="up_vote_answer")
+     * @Route("up_vote/answer/{answer}/{vote}}", name="up_vote_answer")
      * @Method({"GET", "POST"})
      */
     public function upvoteAnswerAction(Request $request,$answer, $vote)
@@ -140,6 +173,7 @@ class QuestionController extends ServicesController
         $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
 
         $rating = new Rating();
+
         $rating->setVote($vote);
         $rating->setAnswer($objAnswer);
         $rating->setUser($this->getUser());
@@ -152,40 +186,25 @@ class QuestionController extends ServicesController
     }
 
     /**
-     * Deletes a question entity.
      *
-     * @Route("/{id}", name="question_delete")
-     * @Method("DELETE")
+     * @Route("up_vote/question/{question}/{vote}}", name="up_vote_question")
+     * @Method({"GET", "POST"})
      */
-    public function deleteAction(Request $request, Question $question)
+    public function upvoteQuestionAction(Request $request,$question, $vote)
     {
-        $form = $this->createDeleteForm($question);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $objQuestion= $em->getRepository('AppBundle:Question')->findOneBy(['id' => $question]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($question);
-            $em->flush();
-        }
+        $rating = new Rating();
+        $rating->setVote($vote);
+        $rating->setUser($this->getUser());
+        $rating->setQuestion($objQuestion);
 
-        return $this->redirectToRoute('question_index');
+        $em->persist($rating);
+        $em->flush();
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
     }
 
-
-
-    /**
-     * Creates a form to delete a question entity.
-     *
-     * @param Question $question The question entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Question $question)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('question_delete', array('id' => $question->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

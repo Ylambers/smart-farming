@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,13 +21,19 @@ class QuestionType extends AbstractType
             ->add('mediaPath')
             ->add('solved')
             ->add('category', EntityType::class, [
-                'class' => 'AppBundle:Category',
-                'label' => 'Categorie',
-                'choice_label' => function ($cat) {
-                    return $cat->getTitle() . " | " . $cat->getDescription();
-                }
-            ]);
-    }/**
+                'class' => 'AppBundle\Entity\Category',
+                'choice_label' => function ($category) {
+                    return $category->getTitle();
+                },
+
+            ])
+            ->add('subCategory')
+
+        ;
+    }
+
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

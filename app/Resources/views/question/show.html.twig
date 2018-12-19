@@ -2,13 +2,35 @@
 
 {% block content %}
 <div class="container top-container">
-    <h1>{{ question.title }}</h1>
-    <h3>{{ question.category.title }}</h3>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong></h1>
+            <h3> {% if question.category is null  %} Geen categorie {% else %} {{ question.category.title }} {% endif %} {% if question.subCategory is null %}-{% else %}  {{ question.subCategory }} {% endif %}</h3>
+        </div>
+
+        <div class="col-md-1">
+            <h2>{{ question.votes }}</h2>
+        </div>
+
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': 1 }) }}">+</a></h2>
+        </div>
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_question', { 'question': question.id, 'vote': -1 }) }}">-</a>
+            </h2>
+        </div>
+   </div>
+
     <p>
         {{ question.text }}
     </p>
 
-    <p><strong>{{ question.user.username }} </strong>| {{ question.user.ranking.title }}</p>
+    <p><strong>{{ question.user.username }} </strong>| {% if question.user.ranking is null %} geen rank {% else %} {{ question.user.ranking.title }} {% endif %}</p>
     <p>Gepost op: {{ question.datePosted|date('d F Y H:i') }}</p>
     {% if question.dateEdited is not null %}
         <p>Bewerkt op: {{ question.dateEdited|date('d F Y H:i') }}</p>
@@ -26,7 +48,7 @@
                 <div class="alert alert-success" role="alert">
                     <p><strong>{{ answers.description }}</strong></p>
                     <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
-                    <p>}</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -35,7 +57,6 @@
                 <a href="{{ path('up_vote_answer', { 'answer': answers.id, 'vote': -1 }) }}">-</a>
             </div>
         </div>
-
     {% endfor %}
 
     <ul>
@@ -47,14 +68,14 @@
         <li>
             <a href="{{ path('question_index') }}">Back to the list</a>
         </li>
-        <li>
-            <a href="{{ path('question_edit', { 'id': question.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+            <li>
+                <a href="{{ path('question_edit', { 'id': question.id }) }}">Edit</a>
+            </li>
+
+        {% endif %}
     </ul>
 </div>
 {% endblock %}
