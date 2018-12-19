@@ -30,7 +30,7 @@ class Tag
 
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      */
     private $question;
 

@@ -86,6 +86,12 @@ class Topic
     private $votes;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TopicType", inversedBy="id")
+     * @ORM\JoinColumn(name="topic_type", referencedColumnName="id", nullable=true)
+     */
+    private $topicType;
+
+    /**
      * Get id
      *
      * @return int
