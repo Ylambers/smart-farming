@@ -9,10 +9,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong> | {% if question.category is null  %} Geen categorie {% else %} {{ question.category.title }} {% endif %} </h1>
+            <h1><strong> {% if question.solved %} Opgelost |{% endif %}  {{ question.title }}</strong></h1>
+            <h3> {% if question.category is null  %} Geen categorie {% else %} {{ question.category.title }} {% endif %} {% if question.subCategory is null %}-{% else %}  {{ question.subCategory }} {% endif %}</h3>
         </div>
-
-
 
         <div class="col-md-1">
             <h2>{{ question.votes }}</h2>

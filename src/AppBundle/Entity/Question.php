@@ -38,6 +38,13 @@ class Question
     /**
      * @var string
      *
+     * @ORM\Column(name="sub_category", type="string", length=255, nullable=true)
+     */
+    private $subCategory;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="media_path", type="text", nullable=true)
      */
     private $mediaPath;
@@ -271,6 +278,22 @@ class Question
     public function setVotes($votes)
     {
         $this->votes = $votes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubCategory()
+    {
+        return $this->subCategory;
+    }
+
+    /**
+     * @param string $subCategory
+     */
+    public function setSubCategory($subCategory)
+    {
+        $this->subCategory = $subCategory;
     }
 }
 
