@@ -193,7 +193,7 @@ class TopicController extends ServicesController
     public function upvoteQuestionAction(Request $request,$question, $vote)
     {
         $em = $this->getDoctrine()->getManager();
-        $objQuestion= $em->getRepository('Topic')->findOneBy(['id' => $question]);
+        $objQuestion= $em->getRepository('AppBundle:Topic')->findOneBy(['id' => $question]);
 
         $rating = new Rating();
         $rating->setVote($vote);
