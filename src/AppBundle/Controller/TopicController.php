@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class TopicController extends ServicesController
 {
     /**
-     * Lists all question entities.
+     * Lists all topic entities.
      *
      * @Route("/", name="topic_index")
      * @Method("GET")
@@ -39,7 +39,7 @@ class TopicController extends ServicesController
     }
 
     /**
-     * Lists all question entities.
+     * Lists all topic entities.
      *
      * @Route("/search/{id}", name="topic_search_on_key")
      * @Method("GET")
@@ -62,7 +62,7 @@ class TopicController extends ServicesController
 
 
     /**
-     * Creates a new question entity.
+     * Creates a new topic entity.
      *
      * @Route("/new", name="topic_new")
      * @Method({"GET", "POST"})
@@ -87,7 +87,7 @@ class TopicController extends ServicesController
             $em->persist($topic);
             $em->flush();
 
-            return $this->redirectToRoute('question_show', array('id' => $topic->getId()));
+            return $this->redirectToRoute('topic_show', array('id' => $topic->getId()));
         }
 
         return $this->render('topic/new.html.twig', array(
@@ -152,11 +152,11 @@ class TopicController extends ServicesController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_edit', array('id' => $topic->getId()));
+            return $this->redirectToRoute('topic_edit', array('id' => $topic->getId()));
         }
 
-        return $this->render('question/edit.html.twig', array(
-            'question' => $topic,
+        return $this->render('topic/edit.html.twig', array(
+            'topic' => $topic,
             'edit_form' => $editForm->createView(),
         ));
     }
