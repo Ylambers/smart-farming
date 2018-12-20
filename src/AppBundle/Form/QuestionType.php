@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Enum\TopicTypeEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,6 +18,12 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('topic_type', ChoiceType::class, [
+                'choices' => TopicTypeEnum::getTopicTypes(),
+                'choice_label' => function($choice){
+                    return TopicTypeEnum::getTopicTypeName($choice);
+                }
+            ])
             ->add('text')
             ->add('mediaPath')
             ->add('solved')

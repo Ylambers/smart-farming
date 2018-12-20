@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enum\TopicTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -83,13 +84,14 @@ class Topic
      */
     private $category;
 
+    //Just a setter for a frondend call
     private $votes;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TopicType", inversedBy="id")
-     * @ORM\JoinColumn(name="topic_type", referencedColumnName="id", nullable=true)
-     */
+
+    /** @ORM\Column(name="topic_type", type="string", columnDefinition="enum('question', 'demand', 'supply')") */
+
     private $topicType;
+
 
     /**
      * Get id
@@ -300,6 +302,28 @@ class Topic
     public function setSubCategory($subCategory)
     {
         $this->subCategory = $subCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopicType()
+    {
+        return $this->topicType;
+    }
+
+    /**
+     * @param mixed $topicType
+     */
+    public function setTopicType($topicType)
+    {
+
+        if(!in_array($topicType, TopicTypeEnum::getTopicTypes())){
+            throw new \InvalidArgumentException("Invalid");
+        }
+
+
+        $this->topicType = $topicType;
     }
 }
 
