@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enum\TopicTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Question
  *
- * @ORM\Table(name="question")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
+ * @ORM\Table(name="topic")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomRepository")
  */
-class Question
+class Topic
 {
     /**
      * @var int
@@ -38,6 +39,13 @@ class Question
     /**
      * @var string
      *
+     * @ORM\Column(name="sub_category", type="string", length=255, nullable=true)
+     */
+    private $subCategory;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="media_path", type="text", nullable=true)
      */
     private $mediaPath;
@@ -50,11 +58,12 @@ class Question
     private $datePosted;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
-     * @ORM\Column(name="answered", type="boolean", nullable=true)
+     * @ORM\Column(name="date_edited", type="datetime", nullable=true)
      */
-    private $answered;
+    private $dateEdited;
+
 
     /**
      * @var bool
@@ -71,9 +80,18 @@ class Question
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="id")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     private $category;
+
+    //Just a setter for a frondend call
+    private $votes;
+
+
+    /** @ORM\Column(name="topic_type", type="string", columnDefinition="enum('question', 'demand', 'supply')") */
+
+    private $topicType;
+
 
     /**
      * Get id
@@ -90,7 +108,7 @@ class Question
      *
      * @param string $title
      *
-     * @return Question
+     * @return Topic
      */
     public function setTitle($title)
     {
@@ -114,7 +132,7 @@ class Question
      *
      * @param string $text
      *
-     * @return Question
+     * @return Topic
      */
     public function setText($text)
     {
@@ -138,7 +156,7 @@ class Question
      *
      * @param string $mediaPath
      *
-     * @return Question
+     * @return Topic
      */
     public function setMediaPath($mediaPath)
     {
@@ -162,7 +180,7 @@ class Question
      *
      * @param \DateTime $datePosted
      *
-     * @return Question
+     * @return Topic
      */
     public function setDatePosted($datePosted)
     {
@@ -181,36 +199,13 @@ class Question
         return $this->datePosted;
     }
 
-    /**
-     * Set answered
-     *
-     * @param boolean $answered
-     *
-     * @return Question
-     */
-    public function setAnswered($answered)
-    {
-        $this->answered = $answered;
-
-        return $this;
-    }
-
-    /**
-     * Get answered
-     *
-     * @return bool
-     */
-    public function getAnswered()
-    {
-        return $this->answered;
-    }
 
     /**
      * Set solved
      *
      * @param boolean $solved
      *
-     * @return Question
+     * @return Topic
      */
     public function setSolved($solved)
     {
@@ -261,5 +256,74 @@ class Question
         $this->category = $category;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDateEdited()
+    {
+        return $this->dateEdited;
+    }
+
+    /**
+     * @param \DateTime $dateEdited
+     */
+    public function setDateEdited($dateEdited)
+    {
+        $this->dateEdited = $dateEdited;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param mixed $votes
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubCategory()
+    {
+        return $this->subCategory;
+    }
+
+    /**
+     * @param string $subCategory
+     */
+    public function setSubCategory($subCategory)
+    {
+        $this->subCategory = $subCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopicType()
+    {
+        return $this->topicType;
+    }
+
+    /**
+     * @param mixed $topicType
+     */
+    public function setTopicType($topicType)
+    {
+
+        if(!in_array($topicType, TopicTypeEnum::getTopicTypes())){
+            throw new \InvalidArgumentException("Invalid");
+        }
+
+
+        $this->topicType = $topicType;
+    }
 }
 

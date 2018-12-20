@@ -22,9 +22,9 @@ class Rating
     private $id;
 
     /**
-     * @var bool
+     * @var integer
      *
-     * @ORM\Column(name="vote", type="boolean", nullable=true)
+     * @ORM\Column(name="vote", type="integer", nullable=true)
      */
     private $vote;
 
@@ -35,14 +35,19 @@ class Rating
     private $answer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Question", inversedBy="id")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
+     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      */
     private $question;
 
+
     /**
-     * Get id
-     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
      * @return int
      */
     public function getId()
@@ -51,27 +56,27 @@ class Rating
     }
 
     /**
-     * Set vote
-     *
-     * @param boolean $vote
-     *
-     * @return Rating
+     * @param int $id
      */
-    public function setVote($vote)
+    public function setId($id)
     {
-        $this->vote = $vote;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get vote
-     *
-     * @return bool
+     * @return int
      */
     public function getVote()
     {
         return $this->vote;
+    }
+
+    /**
+     * @param int $vote
+     */
+    public function setVote($vote)
+    {
+        $this->vote = $vote;
     }
 
     /**
@@ -106,5 +111,20 @@ class Rating
         $this->question = $question;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
 }
 

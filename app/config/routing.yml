@@ -1,3 +1,15 @@
+app_ranking:
+    resource: "@AppBundle/Controller/RankingController.php"
+    type:     annotation
+
+app_topic:
+    resource: "@AppBundle/Controller/TopicController.php"
+    type:     annotation
+
+app_company:
+    resource: "@AppBundle/Controller/CompanyController.php"
+    type:     annotation
+
 app:
    resource: "@AppBundle/Controller"
    type:     annotation

@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+<div class="container top-container">
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1><strong> {% if topic.solved %} Opgelost |{% endif %}  {{ topic.title }}</strong></h1>
+            <h3> {% if topic.category is null  %} Geen categorie {% else %} {{ topic.category.title }} {% endif %} {% if topic.subCategory is null %}-{% else %}  {{ topic.subCategory }} {% endif %}</h3>
+            <h3>{{ topic.topicType }}</h3>
+        </div>
+
+        <div class="col-md-1">
+            <h2>{{ topic.votes }}</h2>
+        </div>
+
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_topic', { 'topic': topic.id, 'vote': 1 }) }}">+</a></h2>
+        </div>
+        <div class="col-md-1">
+            <h2>            <a href="{{ path('up_vote_topic', { 'topic': topic.id, 'vote': -1 }) }}">-</a>
+            </h2>
+        </div>
+   </div>
+
+    <p>
+        {{ topic.text }}
+    </p>
+
+    <p><strong>{{ topic.user.username }} </strong>| {% if topic.user.ranking is null %} geen rank {% else %} {{ topic.user.ranking.title }} {% endif %}</p>
+    <p>Gepost op: {{ topic.datePosted|date('d F Y H:i') }}</p>
+    {% if topic.dateEdited is not null %}
+        <p>Bewerkt op: {{ topic.dateEdited|date('d F Y H:i') }}</p>
+    {% endif %}
+
+
+    <hr>
+
+    {% for answers in givenAnswers %}
+        <div class="row">
+            <div class="col-md-2">
+                <h2>{{ answers.votes }}</h2>
+            </div>
+            <div class="col-md-8">
+                <div class="alert alert-success" role="alert">
+                    <p><strong>{{ answers.description }}</strong></p>
+                    <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <a href="{{ path('up_vote_answer', { 'answer': answers.id, 'vote': 1 }) }}">+</a>
+                <a href="{{ path('up_vote_answer', { 'answer': answers.id, 'vote': -1 }) }}">-</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <ul>
+        <h3>Beantwoord vraag!</h3>
+        {{ form_start(answerForm) }}
+        {{ form_widget(answerForm) }}
+        {{ form_end(answerForm) }}
+
+        <li>
+            <a href="{{ path('topic_index') }}">Back to the list</a>
+        </li>
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+            <li>
+                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Edit</a>
+            </li>
+
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

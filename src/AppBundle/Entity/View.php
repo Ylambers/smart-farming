@@ -28,8 +28,8 @@ class View
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Question", inversedBy="id")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
+     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      */
     private $question;
 
