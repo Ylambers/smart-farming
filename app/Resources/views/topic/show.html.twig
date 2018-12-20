@@ -11,6 +11,7 @@
         <div class="col-md-12">
             <h1><strong> {% if topic.solved %} Opgelost |{% endif %}  {{ topic.title }}</strong></h1>
             <h3> {% if topic.category is null  %} Geen categorie {% else %} {{ topic.category.title }} {% endif %} {% if topic.subCategory is null %}-{% else %}  {{ topic.subCategory }} {% endif %}</h3>
+            <h3>{{ topic.topicType }}</h3>
         </div>
 
         <div class="col-md-1">
