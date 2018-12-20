@@ -9,7 +9,7 @@
         <ul class="dropdown-menu">
             {% for cat in category %}
                     <li>
-                        <a href="{{ path('question_search_on_key', { 'id': cat.id }) }}">{{ cat.title }}</a>
+                        <a href="{{ path('topic_search_on_key', { 'id': cat.id }) }}">{{ cat.title }}</a>
                     </li>
             {% endfor %}
         </ul>
@@ -26,19 +26,19 @@
             </tr>
         </thead>
         <tbody>
-        {% for question in questions %}
+        {% for topic in topics %}
             <tr>
-                <td>{{ question.votes }}</td>
-                <td><a href="{{ path('question_show', { 'id': question.id }) }}">{{ question.title }}</a></td>
-                <td>{% if question.datePosted %}{{ question.datePosted|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if question.solved %}Yes{% else %}No{% endif %}</td>
+                <td>{{ topic.votes }}</td>
+                <td><a href="{{ path('topic_show', { 'id': topic.id }) }}">{{ topic.title }}</a></td>
+                <td>{% if topic.datePosted %}{{ topic.datePosted|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if topic.solved %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('question_show', { 'id': question.id }) }}">show</a>
+                            <a href="{{ path('topic_show', { 'id': topic.id }) }}">show</a>
                         </li>
                         <li>
-                            <a href="{{ path('question_edit', { 'id': question.id }) }}">edit</a>
+                            <a href="{{ path('topic_edit', { 'id': topic.id }) }}">edit</a>
                         </li>
                     </ul>
                 </td>
@@ -49,7 +49,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('question_new') }}">Create a new question</a>
+            <a href="{{ path('topic_new') }}">Create a new question</a>
         </li>
     </ul>
 </div>

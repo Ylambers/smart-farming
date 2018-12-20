@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enum\TopicTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Question
  *
- * @ORM\Table(name="question")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
+ * @ORM\Table(name="topic")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomRepository")
  */
-class Question
+class Topic
 {
     /**
      * @var int
@@ -83,7 +84,14 @@ class Question
      */
     private $category;
 
+    //Just a setter for a frondend call
     private $votes;
+
+
+    /** @ORM\Column(name="topic_type", type="string", columnDefinition="enum('question', 'demand', 'supply')") */
+
+    private $topicType;
+
 
     /**
      * Get id
@@ -100,7 +108,7 @@ class Question
      *
      * @param string $title
      *
-     * @return Question
+     * @return Topic
      */
     public function setTitle($title)
     {
@@ -124,7 +132,7 @@ class Question
      *
      * @param string $text
      *
-     * @return Question
+     * @return Topic
      */
     public function setText($text)
     {
@@ -148,7 +156,7 @@ class Question
      *
      * @param string $mediaPath
      *
-     * @return Question
+     * @return Topic
      */
     public function setMediaPath($mediaPath)
     {
@@ -172,7 +180,7 @@ class Question
      *
      * @param \DateTime $datePosted
      *
-     * @return Question
+     * @return Topic
      */
     public function setDatePosted($datePosted)
     {
@@ -197,7 +205,7 @@ class Question
      *
      * @param boolean $solved
      *
-     * @return Question
+     * @return Topic
      */
     public function setSolved($solved)
     {
@@ -294,6 +302,28 @@ class Question
     public function setSubCategory($subCategory)
     {
         $this->subCategory = $subCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopicType()
+    {
+        return $this->topicType;
+    }
+
+    /**
+     * @param mixed $topicType
+     */
+    public function setTopicType($topicType)
+    {
+
+        if(!in_array($topicType, TopicTypeEnum::getTopicTypes())){
+            throw new \InvalidArgumentException("Invalid");
+        }
+
+
+        $this->topicType = $topicType;
     }
 }
 

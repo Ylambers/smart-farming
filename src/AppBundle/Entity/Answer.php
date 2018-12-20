@@ -50,7 +50,7 @@ class Answer
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Question", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
      * @ORM\JoinColumn(name="question", referencedColumnName="id")
      */
     private $question;
