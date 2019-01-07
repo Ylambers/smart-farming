@@ -207,4 +207,13 @@ class TopicController extends ServicesController
         return $this->redirect($referer);
     }
 
+    /**
+     *
+     * @Route("up_vote/topic/{topic}/{vote}}", name="deactivate_topic")
+     */
+    public function deactivateTopicAction($id)
+    {
+
+    }
+
 }

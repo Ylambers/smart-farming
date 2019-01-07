@@ -67,13 +67,17 @@
         {{ form_end(answerForm) }}
 
         <li>
-            <a href="{{ path('topic_index') }}">Back to the list</a>
+            <a href="{{ path('topic_index') }}">Terug naar de lijst</a>
         </li>
 
         {% if is_granted('ROLE_SUPER_ADMIN') %}
 
             <li>
-                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Edit</a>
+                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Deactiveer topic</a>
+            </li>
+
+            <li>
+                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Bewerk</a>
             </li>
 
         {% endif %}
