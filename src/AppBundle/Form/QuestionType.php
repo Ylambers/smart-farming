@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 class QuestionType extends AbstractType
 {
     /**
@@ -16,29 +16,37 @@ class QuestionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('topic_type', ChoiceType::class, [
+
+        $builder->add('title');
+           $builder ->add('topic_type', ChoiceType::class, [
                 'choices' => TopicTypeEnum::getTopicTypes(),
                 'choice_label' => function($choice){
                     return TopicTypeEnum::getTopicTypeName($choice);
                 }
-            ])
-            ->add('text')
-            ->add('mediaPath')
-            ->add('solved')
-            ->add('category', EntityType::class, [
-                'class' => 'AppBundle\Entity\Category',
-                'choice_label' => function ($category) {
-                    return $category->getTitle();
-                },
+            ]);
+        $builder->add('text');
+        $builder->add('mediaPath');
+        $builder->add('solved');
+        if($this->authorization->isGranted('ROLE_SUPER_ADMIN')) {
+            $builder->add('activated');
+        }
+        $builder->add('category', EntityType::class, [
+            'class' => 'AppBundle\Entity\Category',
+            'choice_label' => function ($category) {
+                return $category->getTitle();
+            },
 
-            ])
-            ->add('subCategory')
+        ]);
+        $builder->add('subCategory');
 
-        ;
+
+
     }
+    private $authorization;
 
-
+    public function __construct(AuthorizationChecker $authorizationChecker)
+    {
+        $this->authorization = $authorizationChecker;
+    }
 
 }

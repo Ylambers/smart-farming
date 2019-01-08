@@ -22,6 +22,7 @@
                 <th>Title</th>
                 <th>Dateposted</th>
                 <th>Solved</th>
+                <th>Activated</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 <td><a href="{{ path('topic_show', { 'id': topic.id }) }}">{{ topic.title }}</a></td>
                 <td>{% if topic.datePosted %}{{ topic.datePosted|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if topic.solved %}Yes{% else %}No{% endif %}</td>
+                <td>{% if topic.activated %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>

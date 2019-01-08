@@ -76,6 +76,7 @@ class TopicController extends ServicesController
 
 
         $topic = new Topic();
+        $topic->setActivated(1);
         $form = $this->createForm('AppBundle\Form\QuestionType', $topic);
         $form->handleRequest($request);
 
