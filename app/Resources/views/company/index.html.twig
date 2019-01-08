@@ -36,6 +36,7 @@
                             <a href="{{ path('company_edit', { 'id': company.id }) }}">Bewerk</a>
                         </li>
 
+
                         <li>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <a href="{{ path('admin_accept_company', { 'id': company.id }) }}">Accepteer bedrijf</a>
@@ -50,9 +51,7 @@
     </table>
 
     <ul>
-
             <a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a>
-        
     </ul>
 </div>
 {% endblock %}
