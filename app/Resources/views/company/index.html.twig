@@ -8,18 +8,16 @@
 
     <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Websiteurl</th>
+                <th>Titel</th>
+                <th>Beschrijving</th>
+                <th>Website</th>
                 <th>Kvk</th>
-                <th>Actions</th>
+                <th>Opties</th>
             </tr>
         </thead>
         <tbody>
         {% for company in companies %}
             <tr>
-                <td><a href="{{ path('company_show', { 'id': company.id }) }}">{{ company.id }}</a></td>
                 <td>{{ company.title }}</td>
                 <td>{{ company.description }}</td>
                 <td>{{ company.websiteUrl }}</td>
@@ -27,15 +25,20 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('company_show', { 'id': company.id }) }}">show</a>
+                            <a href="{{ path('company_show', { 'id': company.id }) }}">Bekijk</a>
                         </li>
                         <li>
-                            <a href="{{ path('company_edit', { 'id': company.id }) }}">edit</a>
+                            <a href="{{ path('company_show', { 'id': company.id }) }}">Verwijder</a>
                         </li>
+                        <li>
+                            <a href="{{ path('company_edit', { 'id': company.id }) }}">Bewerk</a>
+                        </li>
+
 
                         <li>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <a href="{{ path('admin_accept_company', { 'id': company.id }) }}">Accepteer bedrijf</a>
+
                             {% endif %}
                         </li>
                     </ul>
@@ -46,9 +49,7 @@
     </table>
 
     <ul>
-        <li>
-            <a href="{{ path('company_new') }}">Create a new company</a>
-        </li>
+            <a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a>
     </ul>
 </div>
 {% endblock %}
