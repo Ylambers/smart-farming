@@ -23,7 +23,7 @@ body{
 */
 
 #sidebar{
-    height: 100%;
+    min-height: 100%;
     width: 15%;
     background: #0067b6;
     position: absolute;
@@ -92,3 +92,20 @@ body{
     color: #fff;
 }
 
+
+
+
+/*SIDE BAR BOOTSTRAP ELEMENTS*/
+
+.dropdown-menu {
+    background-color: #313131;
+    width: 100%;
+    transition: .5s;
+}
+
+
+
+
+/*
+    CONTENT
+*/
