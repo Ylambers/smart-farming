@@ -30,7 +30,7 @@ class CompanyFunction
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="id")
-     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $company_id;
     /**

@@ -76,7 +76,8 @@ class TopicController extends ServicesController
 
 
         $topic = new Topic();
-        $form = $this->createForm('AppBundle\Form\QuestionType', $topic);
+        $topic->setActivated(1);
+        $form = $this->createForm('AppBundle\Form\TopicType', $topic);
         $form->handleRequest($request);
 
         $topic->setUser($this->getUser());
@@ -143,7 +144,7 @@ class TopicController extends ServicesController
      */
     public function editAction(Request $request, Topic $topic)
     {
-        $editForm = $this->createForm('AppBundle\Form\QuestionType', $topic);
+        $editForm = $this->createForm('AppBundle\Form\TopicType', $topic);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -205,6 +206,15 @@ class TopicController extends ServicesController
 
         $referer = $request->headers->get('referer'); // redirect to last page
         return $this->redirect($referer);
+    }
+
+    /**
+     *
+     * @Route("up_vote/topic/{topic}/{vote}}", name="deactivate_topic")
+     */
+    public function deactivateTopicAction($id)
+    {
+
     }
 
 }
