@@ -8,18 +8,16 @@
 
     <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Websiteurl</th>
+                <th>Titel</th>
+                <th>Beschrijving</th>
+                <th>Website</th>
                 <th>Kvk</th>
-                <th>Actions</th>
+                <th>Opties</th>
             </tr>
         </thead>
         <tbody>
         {% for company in companies %}
             <tr>
-                <td><a href="{{ path('company_show', { 'id': company.id }) }}">{{ company.id }}</a></td>
                 <td>{{ company.title }}</td>
                 <td>{{ company.description }}</td>
                 <td>{{ company.websiteUrl }}</td>

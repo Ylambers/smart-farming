@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container top-container">
-    <h1>Company edit</h1>
+    <h1>Bedrijf bewerken</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
@@ -11,11 +11,11 @@
 
     <ul>
         <li>
-            <a href="{{ path('company_index') }}">Back to the list</a>
+            <a href="{{ path('company_index') }}">Terug naar het overzicht</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Verwijder">
             {{ form_end(delete_form) }}
         </li>
     </ul>
