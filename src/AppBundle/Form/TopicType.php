@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-class QuestionType extends AbstractType
+class TopicType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,20 +27,17 @@ class QuestionType extends AbstractType
         $builder->add('text');
         $builder->add('mediaPath');
         $builder->add('solved');
-        if($this->authorization->isGranted('ROLE_SUPER_ADMIN')) {
+        if($this->authorization->isGranted('ROLE_SUPER_ADMIN'))
+        {
             $builder->add('activated');
         }
-        $builder->add('category', EntityType::class, [
-            'class' => 'AppBundle\Entity\Category',
-            'choice_label' => function ($category) {
-                return $category->getTitle();
-            },
-
+            $builder->add('category', EntityType::class, [
+                'class' => 'AppBundle\Entity\Category',
+                'choice_label' => function ($category) {
+                    return $category->getTitle();
+                },
         ]);
         $builder->add('subCategory');
-
-
-
     }
     private $authorization;
 
