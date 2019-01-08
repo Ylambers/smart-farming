@@ -27,15 +27,19 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('company_show', { 'id': company.id }) }}">show</a>
+                            <a href="{{ path('company_show', { 'id': company.id }) }}">Bekijk</a>
                         </li>
                         <li>
-                            <a href="{{ path('company_edit', { 'id': company.id }) }}">edit</a>
+                            <a href="{{ path('company_show', { 'id': company.id }) }}">Verwijder</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('company_edit', { 'id': company.id }) }}">Bewerk</a>
                         </li>
 
                         <li>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <a href="{{ path('admin_accept_company', { 'id': company.id }) }}">Accepteer bedrijf</a>
+
                             {% endif %}
                         </li>
                     </ul>
@@ -47,7 +51,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('company_new') }}">Create a new company</a>
+            <a href="{{ path('company_new') }}">Maak een nieuw bedrijf aan</a>
         </li>
     </ul>
 </div>
