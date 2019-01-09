@@ -31,7 +31,7 @@ class Answer
     /**
      * @var string
      *
-     * @ORM\Column(name="media_path", type="string", length=255, nullable=true)
+     * @ORM\Column(name="media_path", type="text", nullable=true)
      */
     private $mediaPath;
 

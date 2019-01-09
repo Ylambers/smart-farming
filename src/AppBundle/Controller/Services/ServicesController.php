@@ -61,4 +61,12 @@ class ServicesController extends Controller
 
         return $total;
     }
+
+    /**
+     * @return string
+     */
+    public function generateUniqueFileName()
+    {
+        return md5(uniqid());
+    }
 }

@@ -7,7 +7,9 @@ use AppBundle\Entity\Answer;
 use AppBundle\Entity\Topic;
 use AppBundle\Entity\Rating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Question controller.
@@ -123,6 +125,22 @@ class TopicController extends ServicesController
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {
+            $image = $answer->getMediaPath();
+
+            $fileName = $this->generateUniqueFileName() .'.'.$image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+
+            $answer->setMediaPath($fileName);
+
             $em->persist($answer);
             $em->flush();
 
