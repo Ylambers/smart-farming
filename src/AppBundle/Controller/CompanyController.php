@@ -168,6 +168,11 @@ class CompanyController extends ServicesController
             $em->persist($companyMember);
         }
 
+        $this->addFlash(
+            'notice',
+            'Your changes were saved!'
+        );
+
         $em->flush();
 
         $referer = $request->headers->get('referer'); // redirect to last page
