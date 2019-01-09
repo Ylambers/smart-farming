@@ -106,7 +106,7 @@ class TopicController extends ServicesController
     public function showAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
-        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $topic]);
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['topic' => $topic]);
 
         foreach ($givenAnswers as $givenAnswer) {
             $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
@@ -117,7 +117,7 @@ class TopicController extends ServicesController
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
-        $answer->setQuestion($topic);
+        $answer->setTopic($topic);
         $topic->setVotes($this->getQuestionVotes($topic));
 
         $answerForm->handleRequest($request);
@@ -202,16 +202,15 @@ class TopicController extends ServicesController
 
         $findUpvote = $em->getRepository('AppBundle:Rating')->findOneBy(['user' =>$this->getUser(), 'topic'=> $topic]);
 
+        if(!$findUpvote){
+            $rating = new Rating();
+            $rating->setVote($vote);
+            $rating->setUser($this->getUser());
+            $rating->setTopic($objQuestion);
 
-    if(!$findUpvote){
-        $rating = new Rating();
-        $rating->setVote($vote);
-        $rating->setUser($this->getUser());
-        $rating->setQuestion($objQuestion);
-
-        $em->persist($rating);
-        $em->flush();
-    }
+            $em->persist($rating);
+            $em->flush();
+        }
 
 
         $referer = $request->headers->get('referer'); // redirect to last page

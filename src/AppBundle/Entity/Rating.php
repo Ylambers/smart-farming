@@ -111,7 +111,7 @@ class Rating
         $this->topic = $topic;
     }
 
-  
+
 
     /**
      * @return mixed
