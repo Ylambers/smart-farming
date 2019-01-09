@@ -73,12 +73,12 @@ class TopicController extends ServicesController
     {
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('AppBundle:Category')->findMainCategory();
-        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
+//        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
 
 
 
         $topic = new Topic();
-        $topic->setActivated(1);
+        $topic->setActivated(true);
         $form = $this->createForm('AppBundle\Form\TopicType', $topic);
         $form->handleRequest($request);
 
