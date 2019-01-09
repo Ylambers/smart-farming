@@ -9,3 +9,4 @@
 
 //TODO check on upvotes
 //TODO check on multiple users on company
+//TODO media

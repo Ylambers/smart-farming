@@ -173,14 +173,18 @@ class TopicController extends ServicesController
         $em = $this->getDoctrine()->getManager();
         $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
 
-        $rating = new Rating();
+        $findVote = $em->getRepository('AppBundle:Rating')->findOneBy(['user' => $this->getUser(), 'answer' => $answer]);
 
-        $rating->setVote($vote);
-        $rating->setAnswer($objAnswer);
-        $rating->setUser($this->getUser());
+        if(!$findVote){
+            $rating = new Rating();
 
-        $em->persist($rating);
-        $em->flush();
+            $rating->setVote($vote);
+            $rating->setAnswer($objAnswer);
+            $rating->setUser($this->getUser());
+
+            $em->persist($rating);
+            $em->flush();
+        }
 
         $referer = $request->headers->get('referer'); // redirect to last page
         return $this->redirect($referer);
