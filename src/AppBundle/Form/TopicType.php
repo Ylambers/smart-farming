@@ -6,6 +6,7 @@ use AppBundle\Enum\TopicTypeEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -25,7 +26,7 @@ class TopicType extends AbstractType
                 }
             ]);
         $builder->add('text');
-        $builder->add('mediaPath');
+        $builder->add("media_path", FileType::class);
         $builder->add('solved');
         if($this->authorization->isGranted('ROLE_SUPER_ADMIN'))
         {

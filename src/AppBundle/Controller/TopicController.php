@@ -86,6 +86,24 @@ class TopicController extends ServicesController
         $topic->setDatePosted(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $topic->getMediaPath();
+
+            $fileName = $this->generateUniqueFileName() .'.'.$image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+
+            $topic->setMediaPath($fileName);
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($topic);
             $em->flush();
