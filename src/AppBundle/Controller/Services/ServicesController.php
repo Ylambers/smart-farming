@@ -47,11 +47,11 @@ class ServicesController extends Controller
      *
      * Counts gives votes for answers
      */
-    public function getQuestionVotes(Topic $question)
+    public function getTopicVotes(Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $rating = $em->getRepository('AppBundle:Rating')->findBy(['question' => $question]);
+        $rating = $em->getRepository('AppBundle:Rating')->findBy(['topic' => $topic]);
 
         $total = 0;
 

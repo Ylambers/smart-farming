@@ -29,7 +29,7 @@ class TopicController extends ServicesController
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($topics as $topic) {
-            $topic->setVotes($this->getQuestionVotes($topic));
+            $topic->setVotes($this->getTopicVotes($topic));
         }
 
         return $this->render('topic/index.html.twig', array(
@@ -51,7 +51,7 @@ class TopicController extends ServicesController
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($topics as $topic) {
-            $topic->setVotes($this->getQuestionVotes($topic));
+            $topic->setVotes($this->getTopicVotes($topic));
         }
 
         return $this->render('topic/index.html.twig', array(
@@ -118,7 +118,7 @@ class TopicController extends ServicesController
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
         $answer->setTopic($topic);
-        $topic->setVotes($this->getQuestionVotes($topic));
+        $topic->setVotes($this->getTopicVotes($topic));
 
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
@@ -216,14 +216,4 @@ class TopicController extends ServicesController
         $referer = $request->headers->get('referer'); // redirect to last page
         return $this->redirect($referer);
     }
-
-    /**
-     *
-     * @Route("up_vote/topic/{topic}/{vote}}", name="deactivate_topic")
-     */
-    public function deactivateTopicAction($id)
-    {
-
-    }
-
 }
