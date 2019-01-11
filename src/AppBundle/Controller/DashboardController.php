@@ -23,6 +23,11 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        return $this->render(':dashboard/admin:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $topics = $em->getRepository('AppBundle:Topic')->findBy([],[], 10);
+
+        return $this->render(':dashboard/admin:index.html.twig', [
+            'topics' => $topics
+        ]);
     }
 }

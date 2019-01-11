@@ -1,5 +1,45 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
+    <div class="container top-container">
+
+        <br />
+        <br />
+        <br />
+        <table class="table  table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category & subCategory</th>
+                    <th>TopicType</th>
+                    <th>TopicText</th>
+                    <th>DatePosted</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for topic in topics %}
+                 <tr>
+                    <td> {{ topic.title }}</td>
+                    <td>{% if topic.category is null  %} Geen categorie {% else %} {{ topic.category.title }} {% endif %} {% if topic.subCategory is null %}-{% else %}  {{ topic.subCategory }} {% endif %}</td>
+                    <td>{{ topic.topicType }}</td>
+                    <td> {{ topic.text }}</td>
+                    <td>{{ topic.datePosted|date('d F Y H:i') }}</td>
+                    <td><a href="{{ path('topic_show', { 'id': topic.id }) }}">show</a></td>
+                 </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+    </div>
 {% endblock %}
+
+
+
+
+
+
+
+
 
