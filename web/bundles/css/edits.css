@@ -14,7 +14,7 @@ body{
 }
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus{
-    background-color: #0067b6;
+   background-color: #EAF5F4; !important;
 }
 
 
@@ -23,7 +23,7 @@ body{
 */
 
 #sidebar{
-    min-height: 100%;
+    height: 100%;
     width: 15%;
     background: #0067b6;
     position: absolute;
@@ -80,9 +80,9 @@ body{
 
 }
 
-#sidebar li:hover{
+#sidebar li:hover {
     background: #EAF5F4;
-    color: #000000 !important;
+    color: #000000
 }
 
 
@@ -103,8 +103,17 @@ body{
     transition: .5s;
 }
 
-
-
+.style-dropdown ul
+{
+    background-color: #EAF5F4 !important;
+    padding: 3px !important;
+    transition: .5s;
+    width: 100%;
+}
+.dropdown-menu > li > a
+{
+    padding: 5px 1px;
+}
 
 /*
     CONTENT
