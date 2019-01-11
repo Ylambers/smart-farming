@@ -1,0 +1,10 @@
+.flash-message{
+    z-index: 100000;
+    width: 50%;
+    height: 50px;
+
+    position: absolute;
+    background: #000;
+
+    margin: 0 auto;
+}

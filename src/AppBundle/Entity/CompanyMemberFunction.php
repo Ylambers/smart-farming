@@ -25,7 +25,7 @@ class CompanyMemberFunction
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyMember", inversedBy="id")
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $company;
 

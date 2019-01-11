@@ -23,13 +23,13 @@ class CompanyMember
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="id")
-     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $company;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 

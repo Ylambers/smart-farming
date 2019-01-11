@@ -1,3 +1,11 @@
+app_company_member:
+    resource: "@AppBundle/Controller/CompanyMemberController.php"
+    type:     annotation
+
+app_company_member_function:
+    resource: "@AppBundle/Controller/CompanyMemberFunctionController.php"
+    type:     annotation
+
 app_ranking:
     resource: "@AppBundle/Controller/RankingController.php"
     type:     annotation

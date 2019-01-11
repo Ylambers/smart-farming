@@ -40,10 +40,12 @@
 
     <nav id="sidebar" class="visible-lg hidden-sm">
         <div class="header">
-            <h1>Hi, {{ app.user.firstname }} {{ app.user.lastname }}</h1>
 
-            <img src="https://www.w3schools.com/howto/img_avatar.png" class="img-header"  >
-            
+            {% if app.user is not null %}
+                <h1>Hi, {{ app.user.firstname }} {{ app.user.lastname }}</h1>
+
+                <img src="https://www.w3schools.com/howto/img_avatar.png" class="img-header"  >
+            {% endif %}
         </div>
 
         <div class="menu-items">
@@ -76,10 +78,5 @@
 
             {% endif %}
         </div>
-
     </nav>
-
-
-
-
 {% endblock %}

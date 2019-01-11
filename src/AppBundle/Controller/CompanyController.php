@@ -110,7 +110,6 @@ class CompanyController extends ServicesController
      * Deletes a company entity.
      *
      * @Route("/{id}", name="company_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, Company $company)
     {
@@ -160,11 +159,20 @@ class CompanyController extends ServicesController
         $company = $em->getRepository('AppBundle:Company')->findOneBy(['user' => $this->getUser()]);
         $user = $em->getRepository('AppBundle:User')->findOneBy(['id' => $id]);
 
-        $companyMember = new CompanyMember();
-        $companyMember->setUser($user);
-        $companyMember->setCompany($company);
+        $findCompanyMembers =  $em->getRepository('AppBundle:CompanyMember')->findOneBy(['company' => $company, 'user' => $user]);
 
-        $em->persist($companyMember);
+        if(!$findCompanyMembers){
+            $companyMember = new CompanyMember();
+            $companyMember->setUser($user);
+            $companyMember->setCompany($company);
+            $em->persist($companyMember);
+        }
+
+        $this->addFlash(
+            'notice',
+            'Your changes were saved!'
+        );
+
         $em->flush();
 
         $referer = $request->headers->get('referer'); // redirect to last page

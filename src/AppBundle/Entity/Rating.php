@@ -38,7 +38,7 @@ class Rating
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
      * @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      */
-    private $question;
+    private $topic;
 
 
     /**
@@ -98,18 +98,20 @@ class Rating
     /**
      * @return mixed
      */
-    public function getQuestion()
+    public function getTopic()
     {
-        return $this->question;
+        return $this->topic;
     }
 
     /**
-     * @param mixed $question
+     * @param mixed $topic
      */
-    public function setQuestion($question)
+    public function setTopic($topic)
     {
-        $this->question = $question;
+        $this->topic = $topic;
     }
+
+
 
     /**
      * @return mixed

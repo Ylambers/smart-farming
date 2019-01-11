@@ -73,6 +73,29 @@ class Topic
     private $solved;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="activated", type="boolean", nullable=false)
+     */
+    private $activated;
+
+    /**
+     * @return bool
+     */
+    public function isActivated()
+    {
+        return $this->activated;
+    }
+
+    /**
+     * @param bool $activated
+     */
+    public function setActivated($activated)
+    {
+        $this->activated = $activated;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="id")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
