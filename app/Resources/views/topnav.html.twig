@@ -52,8 +52,8 @@
             {% if is_granted('ROLE_SUPER_ADMIN') -%}
 
                 <ul>
-                    {{ block('admin', 'menuItems.html.twig') }}
                     {{ block('user', 'menuItems.html.twig') }}
+                    {{ block('admin', 'menuItems.html.twig') }}
                 </ul>
 
             {% elseif is_granted('ROLE_USER') or is_granted('ROLE_SUPER_ADMIN') -%}
