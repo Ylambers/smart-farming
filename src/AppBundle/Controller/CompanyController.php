@@ -141,12 +141,29 @@ class CompanyController extends ServicesController
             return $this->redirectToRoute('company_new');
         }
 
-
         return $this->render('company/ownersPage.html.twig', array(
             'company' => $company,
             'users' => $users,
             'members' => $members
         ));
+    }
+
+    /**
+     *
+     * @Route("/delete/member/own/company/{id}", name="company_owner_delete_member")
+     */
+    public function deleteCompanyMemberAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $findMember = $em->getRepository('AppBundle:CompanyMember')->findOneBy(['id' => $id]);
+
+        if($findMember){
+            $em->remove($findMember);
+            $em->flush();
+        }
+
+        $referer = $request->headers->get('referer'); // redirect to last page
+        return $this->redirect($referer);
     }
 
     /**
