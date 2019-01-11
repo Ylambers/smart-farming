@@ -30,7 +30,9 @@
                 <h3>Personeel</h3>
                 {% for member in members %}
                     {{ member.user.firstName }} {{ member.user.lastName }} <br />
+                    <a href="{{ path('company_edit', { 'id': member.id }) }}">Verwijder</a>
 
+                    <hr>
                 {% endfor %}
             </div>
             <div class="col-md-6">
