@@ -120,5 +120,5 @@ body{
 */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus
 {
-    background-color: #313131 !important;
+    background-color: rgba(49, 49, 49, 0) !important;
 }
