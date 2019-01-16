@@ -2,20 +2,34 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Admin panel{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% block javascripts %}
+        {% javascripts
+            'bundles/js/jquery-3.1.1.js'
+            'bundles/js/bootstrap.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
 
     {% stylesheets
-    'bundles/css/default/bootstrap.css' filter='cssrewrite'
-    'bundles/css/default/fos.css'
+        'bundles/css/default/bootstrap.css' filter='cssrewrite'
+        'bundles/css/default/index.css'
+        'bundles/css/edits.css'
+
     %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
+<body>
 
-{% include '::topnav.html.twig' %}
 
+
+{% include 'topnav.html.twig' %}
+{% block body %}{% endblock %}
 {% block content %}
 
     {% if app.request.hasPreviousSession %}
@@ -28,22 +42,14 @@
         {% endfor %}
     {% endif %}
 
-    <div>
+    <div class="container top-container">
+        <h1></h1>
         {% block fos_user_content %}
         {% endblock fos_user_content %}
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {% javascripts
-    'bundles/js/jquery-3.1.1.js'
-    'bundles/js/bootstrap.js'
-    'bundles/js/admin/index.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 
-    {#CDN LIBARAYS#}
-    <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-    {#END CDN#}
-{% endblock %}
+
+</body>
+</html>
