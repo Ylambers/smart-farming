@@ -38,10 +38,12 @@ class TopicType extends AbstractType
             ]
         ]);
         $builder->add("media_path", FileType::class,[
-            'label' => "Selecteer uw media"
+            'label' => "Selecteer uw media",
+            'required' => false
         ]);
         $builder->add('solved', CheckboxType::class,[
-            'label' => "Opgelost"
+            'label' => "Opgelost",
+            'required' => false
         ]);
         if($this->authorization->isGranted('ROLE_SUPER_ADMIN'))
         {
