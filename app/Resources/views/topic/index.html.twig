@@ -18,12 +18,12 @@
     <table class="table  table-striped table-hover">
         <thead>
             <tr>
-                <th>Votes</th>
-                <th>Title</th>
-                <th>Dateposted</th>
-                <th>Solved</th>
-                <th>Activated</th>
-                <th>Actions</th>
+                <th>Stemmen</th>
+                <th>Titel</th>
+                <th>GeposteDatum</th>
+                <th>Opgelost</th>
+                <th>Geactiveerd</th>
+                <th>Acties</th>
             </tr>
         </thead>
         <tbody>
@@ -37,10 +37,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('topic_show', { 'id': topic.id }) }}">show</a>
+                            <a href="{{ path('topic_show', { 'id': topic.id }) }}">Laat zien</a>
                         </li>
                         <li>
-                            <a href="{{ path('topic_edit', { 'id': topic.id }) }}">edit</a>
+                            <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Bewerken</a>
                         </li>
                     </ul>
                 </td>
@@ -51,7 +51,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('topic_new') }}">Create a new question</a>
+            <a href="{{ path('topic_new') }}">Maak een nieuw vraag</a>
         </li>
     </ul>
 </div>
