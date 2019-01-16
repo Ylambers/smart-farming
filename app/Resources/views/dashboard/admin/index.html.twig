@@ -12,7 +12,6 @@
                     <th>Titel</th>
                     <th>Categorie & subCategorie</th>
                     <th>Onderwerp Type</th>
-                    <th>Vraag text</th>
                     <th>GeposteDatum</th>
                     <th>Acties</th>
                 </tr>
@@ -23,7 +22,6 @@
                     <td> {{ topic.title }}</td>
                     <td>{% if topic.category is null  %} Geen categorie {% else %} {{ topic.category.title }} {% endif %} {% if topic.subCategory is null %}-{% else %}  {{ topic.subCategory }} {% endif %}</td>
                     <td>{{ topic.topicType }}</td>
-                    <td> {{ topic.text }}</td>
                     <td>{{ topic.datePosted|date('d F Y H:i') }}</td>
                     <td><a href="{{ path('topic_show', { 'id': topic.id }) }}" class="btn btn-default">Laat zien</a></td>
                  </tr>
