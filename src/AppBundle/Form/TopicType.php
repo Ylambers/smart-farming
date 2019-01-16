@@ -25,7 +25,7 @@ class TopicType extends AbstractType
             'label' => "Titel"
         ]);
        $builder ->add('topic_type', ChoiceType::class, [
-            'label' => "Ondwerp Type",
+            'label' => "Onderwerp Type",
             'choices' => TopicTypeEnum::getTopicTypes(),
             'choice_label' => function($choice){
                 return TopicTypeEnum::getTopicTypeName($choice);
