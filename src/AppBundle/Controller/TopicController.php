@@ -27,7 +27,7 @@ class TopicController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $topics = $em->getRepository('AppBundle:Topic')->findAll();
+        $topics = $em->getRepository('AppBundle:Topic')->findBy([], ['id' => 'DESC']);
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($topics as $topic) {
