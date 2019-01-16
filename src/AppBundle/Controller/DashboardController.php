@@ -24,7 +24,7 @@ class DashboardController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $topics = $em->getRepository('AppBundle:Topic')->findBy([],[], 10);
+        $topics = $em->getRepository('AppBundle:Topic')->findBy([],['id' => 'DESC'], 10);
 
         return $this->render(':dashboard/admin:index.html.twig', [
             'topics' => $topics
