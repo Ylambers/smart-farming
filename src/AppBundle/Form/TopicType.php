@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Enum\TopicTypeEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,28 +25,43 @@ class TopicType extends AbstractType
             'label' => "Titel"
         ]);
        $builder ->add('topic_type', ChoiceType::class, [
+            'label' => "Ondwerp Type",
             'choices' => TopicTypeEnum::getTopicTypes(),
             'choice_label' => function($choice){
                 return TopicTypeEnum::getTopicTypeName($choice);
             }
         ]);
         $builder->add('text', TextareaType::class, [
-            'label' => "Voer uw topic vraag in",
-            'placeholder' => "Hoi"
+            'label' => "Vraag text",
+            'attr' => [
+                'placeholder' => "Voer uw vraag in"
+            ]
         ]);
-        $builder->add("media_path", FileType::class);
-        $builder->add('solved');
+        $builder->add("media_path", FileType::class,[
+            'label' => "Selecteer uw media"
+        ]);
+        $builder->add('solved', CheckboxType::class,[
+            'label' => "Opgelost"
+        ]);
         if($this->authorization->isGranted('ROLE_SUPER_ADMIN'))
         {
-            $builder->add('activated');
+            $builder->add('activated', CheckboxType::class,[
+                'label' => "Geactiveerd"
+            ]);
         }
             $builder->add('category', EntityType::class, [
+                'label' => "Categorie",
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => function ($category) {
                     return $category->getTitle();
                 },
         ]);
-        $builder->add('subCategory');
+        $builder->add('subCategory', TextType::class,[
+            'label' => "Sub categorie",
+            'attr' => [
+                'placeholder' => "Voer uw sub categorie in"
+            ]
+        ]);
     }
     private $authorization;
 

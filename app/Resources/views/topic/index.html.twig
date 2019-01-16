@@ -35,24 +35,17 @@
                 <td>{% if topic.solved %}Yes{% else %}No{% endif %}</td>
                 <td>{% if topic.activated %}Yes{% else %}No{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('topic_show', { 'id': topic.id }) }}">Laat zien</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Bewerken</a>
-                        </li>
-                    </ul>
+
+                    <a href="{{ path('topic_show', { 'id': topic.id }) }}" class="btn btn-default">Laat zien</a>
+                    <a href="{{ path('topic_edit', { 'id': topic.id }) }}" class="btn btn-default">Bewerken</a>
+
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('topic_new') }}">Maak een nieuw vraag</a>
-        </li>
-    </ul>
+    <a href="{{ path('topic_new') }}" class="btn btn-default">Maak een nieuw vraag</a>
+
 </div>
 {% endblock %}
