@@ -6,13 +6,10 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-default" value="Maak een nieuw bedrijf aan" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('company_index') }}">Terug naar overzicht</a>
-        </li>
-    </ul>
+    <a href="{{ path('company_index') }}" class="btn btn-default">Terug naar overzicht</a>
+
 </div>
 {% endblock %}

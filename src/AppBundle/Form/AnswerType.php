@@ -21,11 +21,16 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("description", TextareaType::class,[])
+            ->add("description", TextareaType::class,[
+                'label' => "Omschrijving"
+            ])
             ->add("media_path", FileType::class, [
+                'label' => "Selecteer uw media",
                 'required' => false,
             ])
-            ->add("submit", SubmitType::class)
+            ->add("submit", SubmitType::class,[
+                'label' => "Beantwoord"
+            ])
             ->getForm();
     }
 }
