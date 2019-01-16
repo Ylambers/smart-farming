@@ -126,7 +126,7 @@ class TopicController extends ServicesController
     public function showAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
-        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['topic' => $topic]);
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['topic' => $topic], ['id' => 'DESC']);
 
         foreach ($givenAnswers as $givenAnswer) {
             $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
