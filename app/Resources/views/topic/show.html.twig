@@ -14,6 +14,7 @@
             <h3>{{ topic.topicType }}</h3>
         </div>
 
+
         <div class="col-md-1">
             <h2>{{ topic.votes }}</h2>
         </div>
@@ -24,6 +25,12 @@
         <div class="col-md-1">
             <h2>            <a href="{{ path('up_vote_topic', { 'topic': topic.id, 'vote': -1 }) }}">-</a>
             </h2>
+        </div>
+
+        <div class="col-md-2">
+            {% if topic.mediaPath %}
+                <img src="{{ asset('uploads/images/' ~ topic.mediaPath) }}" width="200px;" height="200px;">
+            {% endif %}
         </div>
    </div>
 
@@ -47,9 +54,21 @@
             </div>
             <div class="col-md-8">
                 <div class="alert alert-success" role="alert">
-                    <p><strong>{{ answers.description }}</strong></p>
-                    <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
-                    <p></p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <p><strong>{{ answers.description }}</strong></p>
+                            <p>{{ answers.user.username }} | {{ answers.datePosted|date('d F Y H:i') }}</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            {% if answers.mediaPath %}
+                                <img src="{{ asset('uploads/images/' ~ answers.mediaPath) }}" width="200px;" height="200px;">
+                            {% endif %}
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -66,15 +85,11 @@
         {{ form_widget(answerForm) }}
         {{ form_end(answerForm) }}
 
-        <li>
-            <a href="{{ path('topic_index') }}">Terug naar de lijst</a>
-        </li>
+        <a href="{{ path('topic_index') }}" class="btn btn-default">Terug naar de lijst</a>
 
         {% if is_granted('ROLE_SUPER_ADMIN') %}
 
-            <li>
-                <a href="{{ path('topic_edit', { 'id': topic.id }) }}">Bewerk</a>
-            </li>
+            <a href="{{ path('topic_edit', { 'id': topic.id }) }}" class="btn btn-default">Bewerk</a>
 
         {% endif %}
     </ul>

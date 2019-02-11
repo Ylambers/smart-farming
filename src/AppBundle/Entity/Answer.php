@@ -31,7 +31,7 @@ class Answer
     /**
      * @var string
      *
-     * @ORM\Column(name="media_path", type="string", length=255, nullable=true)
+     * @ORM\Column(name="media_path", type="text", nullable=true)
      */
     private $mediaPath;
 
@@ -51,9 +51,9 @@ class Answer
 
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="id")
-     * @ORM\JoinColumn(name="question", referencedColumnName="id")
+     * @ORM\JoinColumn(name="topic", referencedColumnName="id")
      */
-    private $question;
+    private $topic;
 
     private $votes;
 
@@ -140,18 +140,21 @@ class Answer
     /**
      * @return mixed
      */
-    public function getQuestion()
+    public function getTopic()
     {
-        return $this->question;
+        return $this->topic;
     }
 
     /**
-     * @param mixed $question
+     * @param mixed $topic
      */
-    public function setQuestion($question)
+    public function setTopic($topic)
     {
-        $this->question = $question;
+        $this->topic = $topic;
     }
+
+
+
 
     /**
      * @return mixed

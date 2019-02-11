@@ -11,7 +11,7 @@ services:
         class: AppBundle\Controller\Admin\AdminController
 
     form.service.id:
-        class: AppBundle\Form\QuestionType
+        class: AppBundle\Form\TopicType
         arguments: ['@security.authorization_checker']
         tags:
             - { name: form.type }

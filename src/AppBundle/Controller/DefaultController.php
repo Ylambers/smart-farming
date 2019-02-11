@@ -22,7 +22,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $topics = $em->getRepository('AppBundle:Topic')->findBy([],[], 10);
+
+        return $this->render('default/index.html.twig', [
+            'topics' => $topics
+        ]);
     }
 
     public function homeAction()

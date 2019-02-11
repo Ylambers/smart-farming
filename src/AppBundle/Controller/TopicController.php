@@ -7,7 +7,9 @@ use AppBundle\Entity\Answer;
 use AppBundle\Entity\Topic;
 use AppBundle\Entity\Rating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Question controller.
@@ -25,11 +27,11 @@ class TopicController extends ServicesController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $topics = $em->getRepository('AppBundle:Topic')->findAll();
+        $topics = $em->getRepository('AppBundle:Topic')->findBy([], ['id' => 'DESC']);
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($topics as $topic) {
-            $topic->setVotes($this->getQuestionVotes($topic));
+            $topic->setVotes($this->getTopicVotes($topic));
         }
 
         return $this->render('topic/index.html.twig', array(
@@ -51,7 +53,7 @@ class TopicController extends ServicesController
         $category = $em->getRepository('AppBundle:Category')->findAll();
 
         foreach ($topics as $topic) {
-            $topic->setVotes($this->getQuestionVotes($topic));
+            $topic->setVotes($this->getTopicVotes($topic));
         }
 
         return $this->render('topic/index.html.twig', array(
@@ -71,12 +73,12 @@ class TopicController extends ServicesController
     {
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('AppBundle:Category')->findMainCategory();
-        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
+//        $sub = $em->getRepository('AppBundle:Category')->findSubCategory(1);
 
 
 
         $topic = new Topic();
-        $topic->setActivated(1);
+        $topic->setActivated(true);
         $form = $this->createForm('AppBundle\Form\TopicType', $topic);
         $form->handleRequest($request);
 
@@ -84,6 +86,24 @@ class TopicController extends ServicesController
         $topic->setDatePosted(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $topic->getMediaPath();
+
+            $fileName = $this->generateUniqueFileName() .'.'.$image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+
+            $topic->setMediaPath($fileName);
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($topic);
             $em->flush();
@@ -106,7 +126,7 @@ class TopicController extends ServicesController
     public function showAction(Request $request, Topic $topic)
     {
         $em = $this->getDoctrine()->getManager();
-        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['question' => $topic]);
+        $givenAnswers = $em->getRepository('AppBundle:Answer')->findBy(['topic' => $topic], ['id' => 'DESC']);
 
         foreach ($givenAnswers as $givenAnswer) {
             $givenAnswer->setVotes($this->getAnswerVotes($givenAnswer));
@@ -117,12 +137,28 @@ class TopicController extends ServicesController
         $answerForm = $this->createForm("AppBundle\Form\AnswerType" , $answer);
         $answer->setUser($this->getUser());
         $answer->setDatePosted(new \DateTime());
-        $answer->setQuestion($topic);
-        $topic->setVotes($this->getQuestionVotes($topic));
+        $answer->setTopic($topic);
+        $topic->setVotes($this->getTopicVotes($topic));
 
         $answerForm->handleRequest($request);
         if($answerForm->isSubmitted() && $answerForm->isValid())
         {
+            $image = $answer->getMediaPath();
+
+            $fileName = $this->generateUniqueFileName() .'.'.$image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+
+            $answer->setMediaPath($fileName);
+
             $em->persist($answer);
             $em->flush();
 
@@ -173,14 +209,18 @@ class TopicController extends ServicesController
         $em = $this->getDoctrine()->getManager();
         $objAnswer = $em->getRepository('AppBundle:Answer')->findOneBy(['id' => $answer]);
 
-        $rating = new Rating();
+        $findVote = $em->getRepository('AppBundle:Rating')->findOneBy(['user' => $this->getUser(), 'answer' => $answer]);
 
-        $rating->setVote($vote);
-        $rating->setAnswer($objAnswer);
-        $rating->setUser($this->getUser());
+        if(!$findVote){
+            $rating = new Rating();
 
-        $em->persist($rating);
-        $em->flush();
+            $rating->setVote($vote);
+            $rating->setAnswer($objAnswer);
+            $rating->setUser($this->getUser());
+
+            $em->persist($rating);
+            $em->flush();
+        }
 
         $referer = $request->headers->get('referer'); // redirect to last page
         return $this->redirect($referer);
@@ -196,25 +236,20 @@ class TopicController extends ServicesController
         $em = $this->getDoctrine()->getManager();
         $objQuestion= $em->getRepository('AppBundle:Topic')->findOneBy(['id' => $topic]);
 
-        $rating = new Rating();
-        $rating->setVote($vote);
-        $rating->setUser($this->getUser());
-        $rating->setQuestion($objQuestion);
+        $findUpvote = $em->getRepository('AppBundle:Rating')->findOneBy(['user' =>$this->getUser(), 'topic'=> $topic]);
 
-        $em->persist($rating);
-        $em->flush();
+        if(!$findUpvote){
+            $rating = new Rating();
+            $rating->setVote($vote);
+            $rating->setUser($this->getUser());
+            $rating->setTopic($objQuestion);
+
+            $em->persist($rating);
+            $em->flush();
+        }
+
 
         $referer = $request->headers->get('referer'); // redirect to last page
         return $this->redirect($referer);
     }
-
-    /**
-     *
-     * @Route("up_vote/topic/{topic}/{vote}}", name="deactivate_topic")
-     */
-    public function deactivateTopicAction($id)
-    {
-
-    }
-
 }

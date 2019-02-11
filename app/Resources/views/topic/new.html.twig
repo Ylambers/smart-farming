@@ -2,17 +2,13 @@
 
 {% block content %}
 <div class="container top-container">
-    <h1>Question creation</h1>
+    <h1>Maak een nieuwe vraag</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-default" value="Maak nieuwe vraag aan" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('topic_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('topic_index') }}" class="btn btn-default">Terug naar de lijst</a>
 </div>
 {% endblock %}
